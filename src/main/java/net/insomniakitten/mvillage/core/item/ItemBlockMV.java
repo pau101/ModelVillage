@@ -25,7 +25,6 @@ public class ItemBlockMV extends ItemBlock {
         super(block);
         assert block.getRegistryName() != null;
         setRegistryName(block.getRegistryName());
-        setUnlocalizedName(block.getUnlocalizedName());
     }
 
 }
