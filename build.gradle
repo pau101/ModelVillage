@@ -1,0 +1,54 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            name = "forge"
+            url = "https://files.minecraftforge.net/maven"
+        }
+    }
+    dependencies {
+        classpath "net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT"
+    }
+}
+
+apply plugin: 'net.minecraftforge.gradle.forge'
+
+version = "${mc_version}-${mod_version}"
+if (mod_build != "")
+    version = "${mc_version}-${mod_version}-${mod_build}"
+group = "net.insomniakitten.mvillage"
+archivesBaseName = "mvillage"
+
+sourceCompatibility = compat_version
+targetCompatibility = compat_version
+
+libsDirName = build_dir
+distsDirName = build_dir
+
+compileJava {
+    sourceCompatibility = compat_version
+    targetCompatibility = compat_version
+}
+
+minecraft {
+    version = "${mc_version}-${forge_version}"
+    mappings = mcp_mappings
+
+    replace '%mod_version%', mod_version
+    replace '%mc_version%', mc_version
+}
+
+processResources {
+    inputs.property "build_version", "${mod_version}-${mod_build}"
+    inputs.property "mcf_version", "${mc_version}-${forge_version}"
+
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+        expand 'build_version': "${mod_version}-${mod_build}",
+                'mcf_version': "${mc_version}-${forge_version}"
+    }
+
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}

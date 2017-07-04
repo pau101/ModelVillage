@@ -1,0 +1,16 @@
+[
+  {
+    "modid": "mvillage",
+    "name": "Model Village",
+    "description": "Decorative models, blocks, and items for the domesticated Minecrafter.",
+    "version": "${build_version}",
+    "mcversion": "${mcf_version}",
+    "url": "https://git.io/vQg6B",
+    "updateUrl": "",
+    "authorList": ["InsomniaKitten"],
+    "credits": "",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+  }
+]
