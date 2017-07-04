@@ -17,6 +17,7 @@ package net.insomniakitten.mvillage.core.block;
  */
 
 import net.insomniakitten.mvillage.ModelVillage;
+import net.insomniakitten.mvillage.core.util.IModelled;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -27,7 +28,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
-public class BlockMV extends Block {
+public class BlockMV extends Block implements IModelled {
 
     private EnumBlockType blockType;
     private AxisAlignedBB axisAlignedBB;
@@ -99,6 +100,11 @@ public class BlockMV extends Block {
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         return axisAlignedBB;
+    }
+
+    @Override
+    public String getVariants() {
+        return "facing=north";
     }
 
     public enum EnumBlockType {CUBE, MODEL}
