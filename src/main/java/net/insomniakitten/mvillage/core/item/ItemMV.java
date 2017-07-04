@@ -26,12 +26,15 @@ public class ItemMV extends Item {
 
     private int maxMeta;
 
-    public ItemMV(String name, int maxSize, int maxMeta) {
+    public ItemMV(String name) {
         setRegistryName(name);
         setUnlocalizedName(ModelVillage.MOD_ID + "." + name);
-        setMaxStackSize(maxSize);
         setCreativeTab(ModelVillage.CTAB);
-        hasSubtypes = maxMeta > 0;
+    }
+
+    public ItemMV(String name, int maxMeta) {
+        this(name);
+        hasSubtypes = true;
         this.maxMeta = maxMeta;
     }
 
@@ -39,7 +42,7 @@ public class ItemMV extends Item {
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
         if (!tab.equals(this.getCreativeTab())) return;
         if (hasSubtypes)
-            for (int i = 0; i < maxMeta; ++i)
+            for (int i = 0; i <= maxMeta; ++i)
                 items.add(new ItemStack(this, 1, i));
         else items.add(new ItemStack(this));
     }

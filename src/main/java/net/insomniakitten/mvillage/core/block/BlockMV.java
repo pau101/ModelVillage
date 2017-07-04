@@ -37,9 +37,7 @@ public class BlockMV extends Block {
             Material material,
             SoundType sound,
             float resistance,
-            float hardness,
-            EnumBlockType type,
-            AxisAlignedBB aabb) {
+            float hardness) {
         super(material);
         setRegistryName(name);
         setUnlocalizedName(ModelVillage.MOD_ID + "." + name);
@@ -47,7 +45,19 @@ public class BlockMV extends Block {
         setResistance(resistance);
         setHardness(hardness);
         setCreativeTab(ModelVillage.CTAB);
-        blockType = type;
+        blockType = EnumBlockType.CUBE;
+        axisAlignedBB = FULL_BLOCK_AABB;
+    }
+
+    public BlockMV(
+            String name,
+            Material material,
+            SoundType sound,
+            float resistance,
+            float hardness,
+            AxisAlignedBB aabb) {
+        this(name, material, sound, resistance, hardness);
+        blockType = EnumBlockType.MODEL;
         axisAlignedBB = aabb;
     }
 
