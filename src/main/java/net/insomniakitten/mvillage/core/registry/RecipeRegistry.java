@@ -29,7 +29,7 @@ import java.util.List;
 @Mod.EventBusSubscriber(modid = ModelVillage.MOD_ID)
 public class RecipeRegistry {
 
-    private static final List<IRecipe> RECIPES = new ArrayList<>();
+    private static final List<IRecipe> RECIPES = new ArrayList<IRecipe>();
 
     @SubscribeEvent
     public void onRegisterRecipes(RegistryEvent.Register<IRecipe> event) {

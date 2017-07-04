@@ -30,8 +30,8 @@ import java.util.List;
 @Mod.EventBusSubscriber(modid = ModelVillage.MOD_ID)
 public class BlockRegistry {
 
-    protected static final List<Block> BLOCKS = new ArrayList<>();
-    protected static final List<ItemBlock> ITEMBLOCKS = new ArrayList<>();
+    protected static final List<Block> BLOCKS = new ArrayList<Block>();
+    protected static final List<ItemBlock> ITEMBLOCKS = new ArrayList<ItemBlock>();
 
     @SubscribeEvent
     public void onRegisterBlocks(RegistryEvent.Register<Block> event) {
@@ -46,19 +46,6 @@ public class BlockRegistry {
             return;
         }
         BLOCKS.add(block);
-    }
-
-    public static void registerBlock(Block block, ItemBlock item) {
-        registerBlock(block);
-        registerItemBlock(item);
-    }
-
-    public static void registerItemBlock(ItemBlock itemblock) {
-        if (ITEMBLOCKS.contains(itemblock)) {
-            LogMV.warn(false, "ItemBlock <{}> exists already! Skipping...", itemblock.getRegistryName());
-            return;
-        }
-        ITEMBLOCKS.add(itemblock);
     }
 
 }

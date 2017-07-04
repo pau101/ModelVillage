@@ -30,7 +30,7 @@ import java.util.List;
 @Mod.EventBusSubscriber(modid = ModelVillage.MOD_ID)
 public class ItemRegistry {
 
-    protected static final List<Item> ITEMS = new ArrayList<>();
+    protected static final List<Item> ITEMS = new ArrayList<Item>();
 
     @SubscribeEvent
     public void onRegisterItems(RegistryEvent.Register<Item> event) {
