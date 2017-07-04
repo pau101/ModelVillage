@@ -19,6 +19,7 @@ package net.insomniakitten.mvillage.core.registry;
 import net.insomniakitten.mvillage.ModelVillage;
 import net.insomniakitten.mvillage.core.util.LogMV;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -29,13 +30,14 @@ import java.util.List;
 @Mod.EventBusSubscriber(modid = ModelVillage.MOD_ID)
 public class ItemRegistry {
 
-    private static final List<Item> ITEMS = new ArrayList<>();
+    protected static final List<Item> ITEMS = new ArrayList<>();
 
     @SubscribeEvent
     public void onRegisterItems(RegistryEvent.Register<Item> event) {
         if (ITEMS.isEmpty()) return;
-        LogMV.log(true, "Registering {} items", ITEMS.size());
+        LogMV.log(true, "Registering {} items", ITEMS.size() + BlockRegistry.ITEMBLOCKS.size());
         event.getRegistry().registerAll(ITEMS.toArray(new Item[0]));
+        event.getRegistry().registerAll(BlockRegistry.ITEMBLOCKS.toArray(new ItemBlock[0]));
     }
 
     public static void registerItem(Item item) {
