@@ -16,8 +16,7 @@ package net.insomniakitten.mvillage.core.util;
  *   limitations under the License.
  */
 
-import net.insomniakitten.mvillage.core.block.BlockMV;
-import net.insomniakitten.mvillage.core.item.ItemMV;
+import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -34,8 +33,8 @@ public interface IModelled {
     default void initModel(ModelRegistryEvent event) {
         Item item;
 
-        if (this instanceof ItemMV) item = (Item) this;
-        else if (this instanceof BlockMV) item = Item.getItemFromBlock((BlockMV) this);
+        if (this instanceof Item) item = (Item) this;
+        else if (this instanceof Block) item = Item.getItemFromBlock((Block) this);
         else throw new IllegalArgumentException("Cannot apply model to " + this.getClass().getCanonicalName());
 
         ModelResourceLocation mrl = new ModelResourceLocation(item.getRegistryName(), getVariants());
