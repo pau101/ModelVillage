@@ -19,10 +19,13 @@ package net.insomniakitten.mvillage;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nonnull;
 
@@ -33,6 +36,8 @@ import javax.annotation.Nonnull;
         acceptedMinecraftVersions = ModelVillage.MC_VERSION
 )
 public class ModelVillage {
+
+    private static final boolean DEOBF = (boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
 
     public static final String MOD_ID = "mvillage";
     public static final String MOD_NAME = "Model Village";
@@ -56,6 +61,22 @@ public class ModelVillage {
         TabMV() { super(CreativeTabs.getNextID(), ModelVillage.MOD_ID); }
         @Override @Nonnull
         public ItemStack getTabIconItem() { return new ItemStack(Items.CAKE); }
+    }
+
+    public static class LogMV {
+
+        private static final Logger LOGGER = LogManager.getLogger(ModelVillage.MOD_NAME);
+
+        public static void log(boolean global, String msg, Object... vars) {
+            if (global || DEOBF)
+                LOGGER.info(msg, vars);
+        }
+
+        public static void warn(boolean global, String msg, Object... vars) {
+            if (global || DEOBF)
+                LOGGER.warn(msg, vars);
+        }
+
     }
 
 }

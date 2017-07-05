@@ -18,7 +18,7 @@ package net.insomniakitten.mvillage.core.registry;
 
 import net.insomniakitten.mvillage.ModelVillage;
 import net.insomniakitten.mvillage.core.util.IModelled;
-import net.insomniakitten.mvillage.core.util.LogMV;
+import net.insomniakitten.mvillage.ModelVillage.LogMV;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;

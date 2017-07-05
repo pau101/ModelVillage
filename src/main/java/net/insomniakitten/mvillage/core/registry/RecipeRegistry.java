@@ -17,7 +17,7 @@ package net.insomniakitten.mvillage.core.registry;
  */
 
 import net.insomniakitten.mvillage.ModelVillage;
-import net.insomniakitten.mvillage.core.util.LogMV;
+import net.insomniakitten.mvillage.ModelVillage.LogMV;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
