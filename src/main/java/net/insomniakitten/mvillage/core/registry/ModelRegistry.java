@@ -18,6 +18,7 @@ package net.insomniakitten.mvillage.core.registry;
 
 import net.insomniakitten.mvillage.ModelVillage;
 import net.insomniakitten.mvillage.core.util.IModelled;
+import net.insomniakitten.mvillage.core.util.LogMV;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -33,12 +34,16 @@ public class ModelRegistry {
     @SubscribeEvent
     public void onRegisterModels(ModelRegistryEvent event) {
         for (Item item : ItemRegistry.ITEMS) {
-            if (item instanceof IModelled)
+            if (item instanceof IModelled) {
+                LogMV.log(false, "Registering MRL for <{}>", item.getRegistryName());
                 ((IModelled) item).initModel(event);
+            }
         }
         for (Block block : BlockRegistry.BLOCKS) {
-            if (block instanceof IModelled)
+            if (block instanceof IModelled) {
+                LogMV.log(false, "Registering MRL for <{}>", block.getRegistryName());
                 ((IModelled) block).initModel(event);
+            }
         }
     }
 
