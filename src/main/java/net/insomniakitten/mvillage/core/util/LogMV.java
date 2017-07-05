@@ -33,7 +33,7 @@ public class LogMV {
 
     public static void warn(boolean global, String msg, Object... vars) {
         if (global || DEOBF)
-            LOGGER.info(msg, vars);
+            LOGGER.warn(msg, vars);
     }
 
 }
