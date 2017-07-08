@@ -39,16 +39,13 @@ minecraft {
 }
 
 processResources {
-    inputs.property "build_version", "${mod_version}-${mod_build}"
-    inputs.property "mcf_version", "${mc_version}-${forge_version}"
-
     from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-        expand 'build_version': "${mod_version}-${mod_build}",
+        include 'mcmod.info', 'pack.mcmeta'
+        expand  'build_version': "${mod_version}-${mod_build}",
                 'mcf_version': "${mc_version}-${forge_version}"
     }
 
     from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
+        exclude 'mcmod.info', 'pack.mcmeta'
     }
 }
