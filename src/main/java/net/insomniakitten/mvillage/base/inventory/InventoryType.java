@@ -17,10 +17,9 @@ package net.insomniakitten.mvillage.base.inventory;
  */
 
 import net.insomniakitten.mvillage.ModelVillage;
-import net.insomniakitten.mvillage.base.util.IPropertySerializable;
 import net.minecraft.util.ResourceLocation;
 
-public enum InventoryType implements IPropertySerializable {
+public enum InventoryType {
 
     GRID(3, 3, 62, 17, new ResourceLocation(ModelVillage.MOD_ID, "textures/gui/grid.png"), 176, 166),
     SMALL(1, 5, 44, 20, new ResourceLocation(ModelVillage.MOD_ID, "textures/gui/small.png"), 176, 133),
