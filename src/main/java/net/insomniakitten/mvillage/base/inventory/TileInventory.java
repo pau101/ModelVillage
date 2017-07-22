@@ -16,10 +16,18 @@ package net.insomniakitten.mvillage.base.inventory;
  *   limitations under the License.
  */
 
+import net.insomniakitten.mvillage.ModelVillage;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
@@ -34,7 +42,6 @@ public class TileInventory extends TileEntity {
     private InventoryType type;
     private ItemStackHandler inventory;
 
-    @SuppressWarnings("unused")
     public TileInventory() {
         // no-op
     }
@@ -53,7 +60,6 @@ public class TileInventory extends TileEntity {
         return capability == this.capability || super.hasCapability(capability, facing);
     }
 
-    @Nullable
     @Override
     public <T> T getCapability(@Nonnull Capability<T> cap, @Nullable EnumFacing facing) {
         if (cap == this.capability)
@@ -64,6 +70,7 @@ public class TileInventory extends TileEntity {
     @Override
     public final void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
+        ModelVillage.Logger.info(false, "nbt.getInteger(\"type\") -> {}", nbt.getInteger("type"));
         this.type = InventoryType.getType(nbt.getInteger("type"));
         this.inventory = new ItemStackHandler(this.type.getTotalSlots());
         this.inventory.deserializeNBT(nbt.getCompoundTag("contents"));
@@ -72,9 +79,37 @@ public class TileInventory extends TileEntity {
     @Override @Nonnull
     public final NBTTagCompound writeToNBT(NBTTagCompound nbt) {
         super.writeToNBT(nbt);
+        ModelVillage.Logger.info(false, "this.type.getID() -> {}", this.type.getID());
         nbt.setInteger("type", this.type.getID());
         nbt.setTag("contents", this.inventory.serializeNBT());
         return nbt;
+    }
+
+
+    @Override @SuppressWarnings("NullableProblems")
+    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {
+        return oldState.getBlock() != newState.getBlock();
+    }
+
+    @Override
+    public final SPacketUpdateTileEntity getUpdatePacket() {
+        return new SPacketUpdateTileEntity(this.getPos(), 0, this.getUpdateTag());
+    }
+
+    @Override @SideOnly(Side.CLIENT)
+    public final void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+        super.onDataPacket(net, pkt);
+        this.readFromNBT(pkt.getNbtCompound());
+    }
+
+    @Override
+    public final NBTTagCompound getUpdateTag() {
+        return this.writeToNBT(new NBTTagCompound());
+    }
+
+    @Override
+    public final void handleUpdateTag(NBTTagCompound tag) {
+        this.readFromNBT(tag);
     }
 
 }
