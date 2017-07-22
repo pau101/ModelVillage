@@ -57,8 +57,7 @@ public class BlockInventory extends BlockMV {
         return true;
     }
 
-    @Override
-    @SuppressWarnings("ConstantConditions")
+    @Override @SuppressWarnings("ConstantConditions")
     public void breakBlock(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state) {
         Capability<IItemHandler> items = TileInventory.getCapability();
         TileEntity tile = world.getTileEntity(pos);
