@@ -30,7 +30,7 @@ public class GuiInventory extends GuiContainer {
     public GuiInventory(TileInventory tile, EntityPlayer player) {
         super(new ContainerInventory(tile, player));
         this.tile = tile;
-        this.type = tile.getInventoryType();
+        this.type = tile != null ? tile.getInventoryType() : InventoryType.NONE;
     }
 
     @Override

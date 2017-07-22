@@ -24,7 +24,8 @@ public enum InventoryType {
     GRID(3, 3, 62, 17, new ResourceLocation(ModelVillage.MOD_ID, "textures/gui/grid.png"), 176, 166),
     SMALL(1, 5, 44, 20, new ResourceLocation(ModelVillage.MOD_ID, "textures/gui/small.png"), 176, 133),
     MEDIUM(2, 9, 8, 27, new ResourceLocation(ModelVillage.MOD_ID, "textures/gui/medium.png"), 176, 166),
-    LARGE(3, 9, 8, 18, new ResourceLocation(ModelVillage.MOD_ID, "textures/gui/large.png"), 176, 166);
+    LARGE(3, 9, 8, 18, new ResourceLocation(ModelVillage.MOD_ID, "textures/gui/large.png"), 176, 166),
+    NONE(0, 0, 0, 0, new ResourceLocation(ModelVillage.MOD_ID, "textures/gui/none.png"), 176, 166);
 
     private final int rows;
     private final int columns;

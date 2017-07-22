@@ -35,12 +35,12 @@ public class ContainerInventory extends Container {
         Capability<IItemHandler> items = CapabilityItemHandler.ITEM_HANDLER_CAPABILITY;
         IItemHandler inventory = tile.hasCapability(items, null) ? tile.getCapability(items, null) : null;
         this.type = tile.getInventoryType();
-        if (inventory != null)
-            createContainerSlots(inventory);
+        createContainerSlots(inventory);
         createPlayerSlots(player);
     }
 
     private void createContainerSlots(IItemHandler inventory) {
+        if (inventory == null) return;
         for (int row = 0; row < type.getRows(); ++row) {
             for (int column = 0; column < type.getColumns(); ++column) {
                 int index = column + (row * type.getColumns());
