@@ -1,4 +1,4 @@
-package net.insomniakitten.mvillage.core.item;
+package net.insomniakitten.mvillage.base.item;
 
 /*
  *  Copyright 2017 InsomniaKitten
@@ -17,13 +17,12 @@ package net.insomniakitten.mvillage.core.item;
  */
 
 import net.insomniakitten.mvillage.ModelVillage;
-import net.insomniakitten.mvillage.core.util.IModelled;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 
-public class ItemMV extends Item implements IModelled {
+public class ItemMV extends Item {
 
     private int maxMeta;
 
@@ -46,11 +45,6 @@ public class ItemMV extends Item implements IModelled {
             for (int i = 0; i <= maxMeta; ++i)
                 items.add(new ItemStack(this, 1, i));
         else items.add(new ItemStack(this));
-    }
-
-    @Override
-    public String getVariants() {
-        return "inventory";
     }
 
 }

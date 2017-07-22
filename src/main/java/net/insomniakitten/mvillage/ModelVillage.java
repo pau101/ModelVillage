@@ -16,25 +16,24 @@ package net.insomniakitten.mvillage;
  *   limitations under the License.
  */
 
+import net.insomniakitten.mvillage.base.gui.GuiManager;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nonnull;
 
-@Mod(
-        modid = ModelVillage.MOD_ID,
+@Mod(   modid = ModelVillage.MOD_ID,
         name = ModelVillage.MOD_NAME,
         version = ModelVillage.MOD_VERSION,
-        acceptedMinecraftVersions = ModelVillage.MC_VERSION
-)
+        acceptedMinecraftVersions = ModelVillage.MC_VERSION,
+        dependencies = ModelVillage.DEPENDENCIES)
+
 public class ModelVillage {
 
     private static final boolean DEOBF = (boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
@@ -43,38 +42,38 @@ public class ModelVillage {
     public static final String MOD_NAME = "Model Village";
     public static final String MOD_VERSION = "%mod_version";
     public static final String MC_VERSION = "%mc_version%";
-    public static final TabMV CTAB = new TabMV();
+    public static final String DEPENDENCIES = "required-after:ctm@[%chisel_version%,);";
+    public static final CreativeTabMV CTAB = new CreativeTabMV();
 
     @Mod.Instance
-    public static ModelVillage instance;
+    private static ModelVillage instance;
 
-    @Mod.EventHandler
-    public void onPreInit(FMLPreInitializationEvent event) {}
+    public static ModelVillage getInstance() {
+        return instance;
+    }
 
-    @Mod.EventHandler
-    public void onInit(FMLInitializationEvent event) {}
-
-    @Mod.EventHandler
-    public void onPostInit(FMLPostInitializationEvent event) {}
-
-    static class TabMV extends CreativeTabs {
-        TabMV() { super(CreativeTabs.getNextID(), ModelVillage.MOD_ID); }
-        @Override @Nonnull
+    static class CreativeTabMV extends CreativeTabs {
+        CreativeTabMV() { super(CreativeTabs.getNextID(), ModelVillage.MOD_ID); }
+        @Override @Nonnull // TODO: Use mod object for creative tab icon
         public ItemStack getTabIconItem() { return new ItemStack(Items.CAKE); }
     }
 
-    public static class LogMV {
+    @Mod.EventHandler
+    public void onPostInit(FMLPostInitializationEvent event) {
+        NetworkRegistry.INSTANCE.registerGuiHandler(ModelVillage.MOD_ID, new GuiManager());
+    }
 
-        private static final Logger LOGGER = LogManager.getLogger(ModelVillage.MOD_NAME);
+    public static class Logger {
 
-        public static void log(boolean global, String msg, Object... vars) {
-            if (global || DEOBF)
-                LOGGER.info(msg, vars);
+        private static final org.apache.logging.log4j.Logger LOGGER
+                = LogManager.getLogger(ModelVillage.MOD_NAME);
+
+        public static void info(boolean global, String msg, Object... vars) {
+            if (global || DEOBF) LOGGER.info(msg, vars);
         }
 
         public static void warn(boolean global, String msg, Object... vars) {
-            if (global || DEOBF)
-                LOGGER.warn(msg, vars);
+            if (global || DEOBF) LOGGER.warn(msg, vars);
         }
 
     }

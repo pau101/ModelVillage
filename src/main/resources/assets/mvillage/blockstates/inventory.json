@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "normal": { "model": "mvillage:test" },
+    "inventory": { "model": "mvillage:test" }
+  }
+}

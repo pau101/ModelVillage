@@ -14,7 +14,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle.forge'
 
 version = "${mc_version}-${mod_version}"
-version_alt = "${mod_version}"
+def version_alt = "${mod_version}"
 
 if (mod_build != "") {
     version = "${mc_version}-${mod_version}-${mod_build}"
@@ -38,16 +38,30 @@ compileJava {
 minecraft {
     version = "${mc_version}-${forge_version}"
     mappings = mcp_mappings
+    runDir = "run"
 
     replace '%mod_version%', mod_version
     replace '%mc_version%', mc_version
+    replace '%ctm_version%', ctm_version
+}
+
+repositories {
+    maven { url = "http://maven.tterrag.com/" }
+    maven { url = "http://dvs1.progwml6.com/files/maven" }
+}
+
+dependencies {
+    compile "team.chisel.ctm:CTM:MC${mc_version}-${ctm_version}"
+    runtime "team.chisel.ctm:CTM:MC${mc_version}-${ctm_version}"
+    deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}:api"
+    runtime "mezz.jei:jei_${mc_version}:${jei_version}"
 }
 
 processResources {
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info', 'pack.mcmeta'
-        expand  'build_version': "${version_alt}",
-                'mcf_version': "${mc_version}-${forge_version}"
+        expand  'build_version': version_alt,
+                'mcf_version': mc_version
     }
 
     from(sourceSets.main.resources.srcDirs) {

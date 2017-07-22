@@ -1,6 +1,6 @@
 {
   "pack": {
     "pack_format": 3,
-    "description": "${build_version}"
+    "description": "mvillage-${build_version}"
   }
 }

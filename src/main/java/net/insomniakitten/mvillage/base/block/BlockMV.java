@@ -1,4 +1,4 @@
-package net.insomniakitten.mvillage.core.block;
+package net.insomniakitten.mvillage.base.block;
 
 /*
  *  Copyright 2017 InsomniaKitten
@@ -17,7 +17,7 @@ package net.insomniakitten.mvillage.core.block;
  */
 
 import net.insomniakitten.mvillage.ModelVillage;
-import net.insomniakitten.mvillage.core.util.IModelled;
+import net.insomniakitten.mvillage.RegistryManager.ObjectRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -28,68 +28,70 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
-public class BlockMV extends Block implements IModelled {
+import javax.annotation.Nonnull;
+
+public class BlockMV extends Block {
 
     private EnumBlockType blockType;
     private AxisAlignedBB axisAlignedBB;
 
     public BlockMV(
-            String name,
-            Material material,
-            SoundType sound,
-            float resistance,
-            float hardness) {
+            String name, Material material, SoundType sound,
+            float resistance, float hardness) {
         super(material);
+        blockType = EnumBlockType.CUBE;
+        axisAlignedBB = FULL_BLOCK_AABB;
         setRegistryName(name);
         setUnlocalizedName(ModelVillage.MOD_ID + "." + name);
         setSoundType(sound);
         setResistance(resistance);
         setHardness(hardness);
         setCreativeTab(ModelVillage.CTAB);
-        blockType = EnumBlockType.CUBE;
-        axisAlignedBB = FULL_BLOCK_AABB;
+        handleItemBlock();
     }
 
-    public BlockMV(
-            String name,
-            Material material,
-            SoundType sound,
-            float resistance,
-            float hardness,
-            AxisAlignedBB aabb) {
-        this(name, material, sound, resistance, hardness);
-        blockType = EnumBlockType.MODEL;
-        axisAlignedBB = aabb;
+    public void setBlockType(EnumBlockType type) {
+        this.blockType = type;
     }
 
-    @Override
+    public void setAxisAlignedBB(AxisAlignedBB aabb) {
+        this.axisAlignedBB = aabb;
+    }
+
+    public void handleItemBlock() {
+        ObjectRegistry.registerItemBlock(this);
+    }
+
+    @Override @Nonnull
     public BlockRenderLayer getBlockLayer() {
         return BlockRenderLayer.CUTOUT_MIPPED;
     }
 
     @Override
     public boolean isTopSolid(IBlockState state) {
-        return blockType.equals(EnumBlockType.CUBE);
+        return blockType == EnumBlockType.CUBE;
     }
 
     @Override
     public boolean isFullBlock(IBlockState state) {
-        return blockType.equals(EnumBlockType.CUBE);
+        return blockType == EnumBlockType.CUBE;
     }
 
     @Override
     public int getLightOpacity(IBlockState state, IBlockAccess world, BlockPos pos) {
-        return blockType.equals(EnumBlockType.CUBE) ? 255 : 0;
+        return blockType == EnumBlockType.CUBE ? 255 : 0;
     }
 
     @Override
     public boolean isFullCube(IBlockState state) {
-        return blockType.equals(EnumBlockType.CUBE);
+        return blockType == EnumBlockType.CUBE;
     }
 
     @Override
     public boolean isOpaqueCube(IBlockState state) {
-        return blockType.equals(EnumBlockType.CUBE);
+        if (blockType == null)
+            return super.isOpaqueCube(state);
+        return blockType == EnumBlockType.CUBE;
     }
 
     @Override
@@ -100,11 +102,6 @@ public class BlockMV extends Block implements IModelled {
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         return axisAlignedBB;
-    }
-
-    @Override
-    public String getVariants() {
-        return "facing=north";
     }
 
     public enum EnumBlockType {CUBE, MODEL}

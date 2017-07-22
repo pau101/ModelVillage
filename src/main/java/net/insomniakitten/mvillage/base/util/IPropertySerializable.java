@@ -1,4 +1,4 @@
-package net.insomniakitten.mvillage.core.item;
+package net.insomniakitten.mvillage.base.util;
 
 /*
  *  Copyright 2017 InsomniaKitten
@@ -16,15 +16,16 @@ package net.insomniakitten.mvillage.core.item;
  *   limitations under the License.
  */
 
-import net.minecraft.block.Block;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.util.IStringSerializable;
 
-public class ItemBlockMV extends ItemBlock {
+import javax.annotation.Nonnull;
+import java.util.Locale;
 
-    public ItemBlockMV(Block block) {
-        super(block);
-        assert block.getRegistryName() != null;
-        setRegistryName(block.getRegistryName());
+public interface IPropertySerializable extends IStringSerializable {
+
+    @Override @Nonnull
+    default String getName() {
+        return ((Enum) this).name().toLowerCase(Locale.ROOT);
     }
 
 }
