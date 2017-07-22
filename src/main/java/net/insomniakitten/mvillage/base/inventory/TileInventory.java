@@ -84,8 +84,7 @@ public class TileInventory extends TileEntity {
         nbt.setTag("contents", this.inventory.serializeNBT());
         return nbt;
     }
-
-
+    
     @Override @SuppressWarnings("NullableProblems")
     public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {
         return oldState.getBlock() != newState.getBlock();
