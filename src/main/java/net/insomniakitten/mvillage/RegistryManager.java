@@ -16,11 +16,11 @@ package net.insomniakitten.mvillage;
  *   limitations under the License.
  */
 
-import com.google.common.base.Equivalence;
 import com.google.common.base.Equivalence.Wrapper;
 import net.insomniakitten.mvillage.base.block.BlockInventory;
 import net.insomniakitten.mvillage.base.inventory.TileInventory;
 import net.insomniakitten.mvillage.base.item.ItemBlockMV;
+import net.insomniakitten.mvillage.base.util.DataHandler;
 import net.insomniakitten.mvillage.base.util.IPropertySerializable;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -41,28 +41,10 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nonnull;
 import java.util.*;
 
 @SuppressWarnings("all")
 public class RegistryManager<T extends Enum<T> & IPropertySerializable> {
-
-    public static final Equivalence<ItemStack> EQV = new Equivalence<ItemStack>() {
-        @Override
-        protected boolean doEquivalent(@Nonnull ItemStack a, @Nonnull ItemStack b) {
-            return ItemStack.areItemStackShareTagsEqual(a, b);
-        }
-
-        @Override
-        protected int doHash(@Nonnull ItemStack stack) {
-            int result = stack.getItem().getRegistryName().hashCode();
-            result = 31 * result + stack.getItemDamage();
-            result = 31 * result + stack.getCount();
-            result = 31 * result + (stack.hasTagCompound() ?
-                    stack.getTagCompound().hashCode() : 0);
-            return result;
-        }
-    };
 
     public static enum Blocks {
         TEST(new BlockInventory("test_inventory"));
@@ -154,7 +136,7 @@ public class RegistryManager<T extends Enum<T> & IPropertySerializable> {
                 if (variants == null) variants = Default.values();
                 for (int i = 0; i < subitems.size(); ++i) {
                     String variant = ((IPropertySerializable) variants[i]).getName();
-                    MODELS.put(EQV.wrap(subitems.get(i)), new ModelResourceLocation(
+                    MODELS.put(DataHandler.EQV.wrap(subitems.get(i)), new ModelResourceLocation(
                             itemBlock.getRegistryName(), variant));
                 }
             }
