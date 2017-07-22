@@ -33,7 +33,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.common.network.internal.FMLNetworkHandler;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
@@ -61,7 +60,7 @@ public class BlockInventory extends BlockMV {
     @Override
     @SuppressWarnings("ConstantConditions")
     public void breakBlock(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state) {
-        Capability<IItemHandler> items = CapabilityItemHandler.ITEM_HANDLER_CAPABILITY;
+        Capability<IItemHandler> items = TileInventory.getCapability();
         TileEntity tile = world.getTileEntity(pos);
         if (tile != null && tile instanceof TileInventory && tile.hasCapability(items, null)) {
             IItemHandler inventory = tile.getCapability(items, null);

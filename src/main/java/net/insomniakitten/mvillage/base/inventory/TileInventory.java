@@ -25,18 +25,20 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+@SuppressWarnings("ConstantConditions")
 public class TileInventory extends TileEntity {
 
-    private final Capability<IItemHandler> capability = CapabilityItemHandler.ITEM_HANDLER_CAPABILITY;
+    @CapabilityInject(IItemHandler.class)
+    private static final Capability<IItemHandler> CAPABILITY = null;
 
     private InventoryType type;
     private ItemStackHandler inventory;
@@ -50,19 +52,23 @@ public class TileInventory extends TileEntity {
         this.inventory = new ItemStackHandler(type.getTotalSlots());
     }
 
+    public static Capability<IItemHandler> getCapability() {
+        return CAPABILITY;
+    }
+
     public InventoryType getInventoryType() {
         return this.type;
     }
 
     @Override
     public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
-        return capability == this.capability || super.hasCapability(capability, facing);
+        return capability == CAPABILITY || super.hasCapability(capability, facing);
     }
 
     @Override
     public <T> T getCapability(@Nonnull Capability<T> cap, @Nullable EnumFacing facing) {
-        if (cap == this.capability)
-            return this.capability.cast(this.inventory);
+        if (cap == CAPABILITY)
+            return CAPABILITY.cast(this.inventory);
         else return super.getCapability(cap, facing);
     }
 
