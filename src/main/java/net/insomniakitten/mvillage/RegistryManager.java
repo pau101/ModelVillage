@@ -85,7 +85,7 @@ public class RegistryManager<T extends Enum<T> & IPropertySerializable> {
     }
 
     public static enum Tiles {
-        INVENTORY(TileInventory.class, new ResourceLocation(ModelVillage.MOD_ID, "inventory"));
+        INVENTORY(TileInventory.class, new ResourceLocation(ModelVillage.MOD_ID, "tile_inventory"));
 
         private final Class<? extends TileEntity> tile;
         private final ResourceLocation key;
