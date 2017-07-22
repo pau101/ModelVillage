@@ -45,13 +45,11 @@ public class BlockInventory extends BlockMV {
     public boolean onBlockActivated(
             World world, BlockPos pos, IBlockState state, EntityPlayer player,
             EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-        if (side.getOpposite() == EnumFacing.NORTH) {
-            if (!world.isRemote) {
-                player.openGui(ModelVillage.getInstance(), GUI.getID(),
-                        world, pos.getX(), pos.getY(), pos.getZ());
-            } return true;
+        if (!world.isRemote) {
+            player.openGui(ModelVillage.getInstance(), GUI.getID(),
+                    world, pos.getX(), pos.getY(), pos.getZ());
         }
-        else return false;
+        return true;
     }
 
     @Override
