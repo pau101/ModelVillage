@@ -136,7 +136,7 @@ public class RegistryManager<T extends Enum<T> & IPropertySerializable> {
                 if (variants == null) variants = Default.values();
                 for (int i = 0; i < subitems.size(); ++i) {
                     String variant = ((IPropertySerializable) variants[i]).getName();
-                    MODELS.put(DataHandler.EQV.wrap(subitems.get(i)), new ModelResourceLocation(
+                    MODELS.put(DataHandler.STACK_EQV.wrap(subitems.get(i)), new ModelResourceLocation(
                             itemBlock.getRegistryName(), variant));
                 }
             }

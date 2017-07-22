@@ -24,7 +24,7 @@ import javax.annotation.Nonnull;
 @SuppressWarnings("ConstantConditions")
 public class DataHandler {
 
-    public static final Equivalence<ItemStack> EQV = new Equivalence<ItemStack>() {
+    public static final Equivalence<ItemStack> STACK_EQV = new Equivalence<ItemStack>() {
         @Override
         protected boolean doEquivalent(@Nonnull ItemStack a, @Nonnull ItemStack b) {
             return ItemStack.areItemStackShareTagsEqual(a, b);
