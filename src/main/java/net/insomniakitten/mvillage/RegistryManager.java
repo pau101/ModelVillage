@@ -31,6 +31,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
@@ -64,7 +65,7 @@ public class RegistryManager<T extends Enum<T> & IPropertySerializable> {
     };
 
     public static enum Blocks {
-        TEST(new BlockInventory());
+        TEST(new BlockInventory("test_inventory"));
 
         private final Block block;
 
@@ -84,14 +85,18 @@ public class RegistryManager<T extends Enum<T> & IPropertySerializable> {
     }
 
     public static enum Tiles {
-        INVENTORY(TileInventory.class);
+        INVENTORY(TileInventory.class, new ResourceLocation(ModelVillage.MOD_ID, "inventory"));
 
         private final Class<? extends TileEntity> tile;
+        private final ResourceLocation key;
 
-        Tiles(Class<? extends TileEntity> tile) { this.tile = tile; }
+        Tiles(Class<? extends TileEntity> tile, ResourceLocation key) {
+            this.tile = tile;
+            this.key = key;
+        }
 
         public Class<? extends TileEntity> getTile() { return tile; }
-        public String getKey() { return name().toLowerCase(Locale.ROOT); }
+        public ResourceLocation getKey() { return key; }
     }
 
     @EventBusSubscriber
@@ -125,7 +130,7 @@ public class RegistryManager<T extends Enum<T> & IPropertySerializable> {
         @SubscribeEvent
         public static void onTileRegistry(RegistryEvent.Register<Block> event) {
             for (Tiles entry : Tiles.values()) {
-                GameRegistry.registerTileEntity(entry.getTile(), entry.getKey());
+                GameRegistry.registerTileEntity(entry.getTile(), entry.getKey().toString());
             }
         }
 

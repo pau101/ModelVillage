@@ -36,8 +36,8 @@ public class BlockInventory extends BlockMV {
 
     private final static GuiType GUI = GuiType.INVENTORY;
 
-    public BlockInventory() {
-        super("inventory", Material.WOOD, SoundType.WOOD, 10.0f, 0.5f);
+    public BlockInventory(String name) {
+        super(name, Material.WOOD, SoundType.WOOD, 10.0f, 0.5f);
         setBlockType(EnumBlockType.MODEL);
     }
 
