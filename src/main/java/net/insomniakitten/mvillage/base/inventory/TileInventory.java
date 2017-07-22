@@ -16,7 +16,6 @@ package net.insomniakitten.mvillage.base.inventory;
  *   limitations under the License.
  */
 
-import net.insomniakitten.mvillage.ModelVillage;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -70,7 +69,6 @@ public class TileInventory extends TileEntity {
     @Override
     public final void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
-        ModelVillage.Logger.info(false, "nbt.getInteger(\"type\") -> {}", nbt.getInteger("type"));
         this.type = InventoryType.getType(nbt.getInteger("type"));
         this.inventory = new ItemStackHandler(this.type.getTotalSlots());
         this.inventory.deserializeNBT(nbt.getCompoundTag("contents"));
@@ -79,12 +77,11 @@ public class TileInventory extends TileEntity {
     @Override @Nonnull
     public final NBTTagCompound writeToNBT(NBTTagCompound nbt) {
         super.writeToNBT(nbt);
-        ModelVillage.Logger.info(false, "this.type.getID() -> {}", this.type.getID());
         nbt.setInteger("type", this.type.getID());
         nbt.setTag("contents", this.inventory.serializeNBT());
         return nbt;
     }
-    
+
     @Override @SuppressWarnings("NullableProblems")
     public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {
         return oldState.getBlock() != newState.getBlock();
