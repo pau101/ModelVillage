@@ -41,12 +41,20 @@ public interface IContainer {
      */
     InventoryType getInventoryType();
 
+    /**
+     * Called in the base block class when the block is right clicked by a player
+     * All parameters are provided by Block#onBlockActivated
+     */
     default void handleContainerGui(World world, BlockPos pos, EntityPlayer player) {
         FMLNetworkHandler.openGui(
                 player, ModelVillage.getInstance(), GuiType.INVENTORY.getID(),
                 world, pos.getX(), pos.getY(), pos.getZ());
     }
 
+    /**
+     * Called in the base block class when the block is broken
+     * All parameters are provided by Block#breakBlock
+     */
     default void handleItemDrops(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state) {
         Capability<IItemHandler> items = TileInventory.getCapability();
         TileEntity tile = world.getTileEntity(pos);
