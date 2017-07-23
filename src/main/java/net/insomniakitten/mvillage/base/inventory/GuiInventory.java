@@ -16,10 +16,12 @@ package net.insomniakitten.mvillage.base.inventory;
  *   limitations under the License.
  */
 
+import net.minecraft.block.Block;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 
 public class GuiInventory extends GuiContainer {
@@ -49,7 +51,8 @@ public class GuiInventory extends GuiContainer {
 
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        String container = I18n.format(tileEntity.getBlockType().getUnlocalizedName()+ ".name");
+        Block block = tileEntity != null ? tileEntity.getBlockType() : Blocks.AIR;
+        String container = I18n.format(block.getUnlocalizedName() + ".name");
         String player = I18n.format("container.inventory");
         int containerLabelY = inventoryType.getSlotsY() - (fontRenderer.FONT_HEIGHT + 2);
         int playerLabelY = inventoryType.getPlayerY() - (fontRenderer.FONT_HEIGHT + 2);
