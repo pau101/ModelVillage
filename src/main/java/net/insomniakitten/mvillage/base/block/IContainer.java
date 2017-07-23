@@ -18,6 +18,7 @@ package net.insomniakitten.mvillage.base.block;
 
 import net.insomniakitten.mvillage.ModelVillage;
 import net.insomniakitten.mvillage.base.gui.GuiManager.GuiType;
+import net.insomniakitten.mvillage.base.inventory.InventoryType;
 import net.insomniakitten.mvillage.base.inventory.TileInventory;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -33,6 +34,12 @@ import net.minecraftforge.items.IItemHandler;
 import javax.annotation.Nonnull;
 
 public interface IContainer {
+
+    /**
+     * This is what tells the base class which inventory type you want attached to your block.
+     * @see InventoryType for more information on the available types.
+     */
+    InventoryType getInventoryType();
 
     default void handleContainerGui(World world, BlockPos pos, EntityPlayer player) {
         FMLNetworkHandler.openGui(

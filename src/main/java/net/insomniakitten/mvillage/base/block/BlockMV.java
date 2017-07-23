@@ -18,17 +18,24 @@ package net.insomniakitten.mvillage.base.block;
 
 import net.insomniakitten.mvillage.ModelVillage;
 import net.insomniakitten.mvillage.RegistryManager.ObjectRegistry;
+import net.insomniakitten.mvillage.base.inventory.TileInventory;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class BlockMV extends Block {
 
@@ -102,6 +109,40 @@ public class BlockMV extends Block {
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         return axisAlignedBB;
+    }
+
+    @Override
+    public boolean onBlockActivated(
+            World world, BlockPos pos, IBlockState state,
+            EntityPlayer player, EnumHand hand, EnumFacing facing,
+            float hitX, float hitY, float hitZ) {
+        if (this instanceof IContainer) {
+            ((IContainer) this).handleContainerGui(world, pos, player);
+            return true;
+        }
+        else return super.onBlockActivated(world, pos, state, player, hand, facing, hitX, hitY, hitZ);
+    }
+
+    @Override
+    public void breakBlock(World world, BlockPos pos, IBlockState state) {
+        if (this instanceof IContainer) {
+            ((IContainer) this).handleItemDrops(world, pos, state);
+        }
+        else super.breakBlock(world, pos, state);
+    }
+
+    @Override
+    public boolean hasTileEntity(IBlockState state) {
+        return this instanceof IContainer;
+    }
+
+    @Nullable
+    @Override
+    public TileEntity createTileEntity(@Nonnull World world, @Nonnull IBlockState state) {
+        if (this instanceof IContainer) {
+            return new TileInventory(((IContainer) this).getInventoryType());
+        }
+        else return null;
     }
 
     public enum EnumBlockType {CUBE, MODEL}

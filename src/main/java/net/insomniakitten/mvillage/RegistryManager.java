@@ -18,8 +18,7 @@ package net.insomniakitten.mvillage;
 
 import com.google.common.base.Equivalence.Wrapper;
 import com.google.common.base.Supplier;
-import net.insomniakitten.mvillage.base.block.BlockInventory;
-import net.insomniakitten.mvillage.base.inventory.InventoryType;
+import net.insomniakitten.mvillage.base.block.BlockTestInventory;
 import net.insomniakitten.mvillage.base.inventory.TileInventory;
 import net.insomniakitten.mvillage.base.item.ItemBlockMV;
 import net.insomniakitten.mvillage.base.util.DataHandler;
@@ -52,7 +51,7 @@ import java.util.Map;
 public class RegistryManager<T extends Enum<T> & IPropertySerializable> {
 
     public static enum Blocks {
-        TEST(() -> new BlockInventory("test_inventory", InventoryType.MEDIUM));
+        TEST(() -> new BlockTestInventory("test_inventory"));
 
         private final Supplier<Block> block;
         Blocks(Supplier<Block> block) { this.block = block; }
