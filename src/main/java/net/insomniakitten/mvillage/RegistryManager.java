@@ -17,6 +17,7 @@ package net.insomniakitten.mvillage;
  */
 
 import com.google.common.base.Equivalence.Wrapper;
+import com.google.common.base.Supplier;
 import net.insomniakitten.mvillage.base.block.BlockInventory;
 import net.insomniakitten.mvillage.base.inventory.InventoryType;
 import net.insomniakitten.mvillage.base.inventory.TileInventory;
@@ -51,19 +52,19 @@ import java.util.Map;
 public class RegistryManager<T extends Enum<T> & IPropertySerializable> {
 
     public static enum Blocks {
-        TEST(new BlockInventory("test_inventory", InventoryType.MEDIUM));
+        TEST(() -> new BlockInventory("test_inventory", InventoryType.MEDIUM));
 
-        private final Block block;
-        Blocks(Block block) { this.block = block; }
-        public Block getBlock() { return block; }
+        private final Supplier<Block> block;
+        Blocks(Supplier<Block> block) { this.block = block; }
+        public Block getBlock() { return block.get(); }
     }
 
     public static enum Items {
         ;
 
-        private final Item item;
-        Items(Item item) { this.item = item; }
-        public Item getItem() { return item; }
+        private final Supplier<Item> item;
+        Items(Supplier<Item> item) { this.item = item; }
+        public Item getItem() { return item.get(); }
     }
 
     public static enum Tiles {
