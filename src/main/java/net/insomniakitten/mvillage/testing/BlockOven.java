@@ -1,4 +1,4 @@
-package net.insomniakitten.mvillage.base.block;
+package net.insomniakitten.mvillage.testing;
 
 /*
  *  Copyright 2017 InsomniaKitten
@@ -16,21 +16,22 @@ package net.insomniakitten.mvillage.base.block;
  *   limitations under the License.
  */
 
+import net.insomniakitten.mvillage.base.block.BlockCardinal;
 import net.insomniakitten.mvillage.base.inventory.InventoryType;
 import net.insomniakitten.mvillage.base.util.IContainer;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 
-public class BlockTestInventory extends BlockMV implements IContainer {
+public class BlockOven extends BlockCardinal implements IContainer {
 
-    public BlockTestInventory(String name) {
-        super(name, Material.WOOD, SoundType.WOOD, 2.0f, 15.0f);
+    public BlockOven() {
+        super("oven", Material.IRON, SoundType.METAL, 2.0f, 15.0f);
         setBlockType(EnumBlockType.MODEL);
     }
 
     @Override
     public InventoryType getInventoryType() {
-        return InventoryType.LARGE;
+        return InventoryType.GRID;
     }
 
 }

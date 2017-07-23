@@ -18,11 +18,12 @@ package net.insomniakitten.mvillage;
 
 import com.google.common.base.Equivalence.Wrapper;
 import com.google.common.base.Supplier;
-import net.insomniakitten.mvillage.base.block.BlockTestInventory;
+import net.insomniakitten.mvillage.testing.BlockCabinet;
 import net.insomniakitten.mvillage.base.inventory.TileInventory;
 import net.insomniakitten.mvillage.base.item.ItemBlockMV;
 import net.insomniakitten.mvillage.base.util.DataHandler;
 import net.insomniakitten.mvillage.base.util.IPropertySerializable;
+import net.insomniakitten.mvillage.testing.BlockOven;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
@@ -42,13 +43,18 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings("all")
 public class RegistryManager<T extends Enum<T> & IPropertySerializable> {
 
     public static enum Blocks {
-        TEST(() -> new BlockTestInventory("test_inventory"));
+        CABINET(() -> new BlockCabinet()),
+        OVEN(() -> new BlockOven())
+        ;
 
         private final Supplier<Block> block;
         Blocks(Supplier<Block> block) { this.block = block; }

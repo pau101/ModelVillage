@@ -37,14 +37,12 @@ import net.minecraft.world.World;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class BlockMV extends Block {
+public class BlockBase extends Block {
 
     private EnumBlockType blockType;
     private AxisAlignedBB axisAlignedBB;
 
-    public BlockMV(
-            String name, Material material, SoundType sound,
-            float hardness, float resistance) {
+    public BlockBase(String name, Material material, SoundType sound, float hardness, float resistance) {
         super(material);
         blockType = EnumBlockType.CUBE;
         axisAlignedBB = FULL_BLOCK_AABB;
