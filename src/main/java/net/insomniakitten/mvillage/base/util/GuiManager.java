@@ -35,9 +35,12 @@ public class GuiManager implements IGuiHandler {
     @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         TileEntity tile = world.getTileEntity(new BlockPos(x, y, z));
-        if (GuiType.get(ID).equals(GuiType.INVENTORY))
-            return new ContainerInventory((TileInventory) tile, player);
-        else return null;
+        switch (GuiType.get(ID)) {
+            case INVENTORY:
+                return new ContainerInventory((TileInventory) tile, player);
+            default:
+                return null;
+        }
     }
 
     @Nullable
@@ -45,9 +48,12 @@ public class GuiManager implements IGuiHandler {
     @SideOnly(Side.CLIENT)
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         TileEntity tile = world.getTileEntity(new BlockPos(x, y, z));
-        if (GuiType.get(ID).equals(GuiType.INVENTORY))
-            return new GuiInventory((TileInventory) tile, player);
-        else return null;
+        switch (GuiType.get(ID)) {
+            case INVENTORY:
+                return new GuiInventory((TileInventory) tile, player);
+            default:
+                return null;
+        }
     }
 
     public enum GuiType {
