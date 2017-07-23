@@ -29,19 +29,19 @@ public enum InventoryType {
 
     private final int rows;
     private final int columns;
-    private final int x;
-    private final int y;
-    private final ResourceLocation texture;
+    private final int slotsX;
+    private final int slotsY;
+    private final ResourceLocation guiTexture;
     private final int textureWidth;
     private final int textureHeight;
 
-    InventoryType(int rows, int columns, int x, int y,
-                  ResourceLocation texture, int textureWidth, int textureHeight) {
+    InventoryType(int rows, int columns, int slotsX, int slotsY,
+                  ResourceLocation guiTexture, int textureWidth, int textureHeight) {
         this.rows = rows;
         this.columns = columns;
-        this.x = x;
-        this.y = y;
-        this.texture = texture;
+        this.slotsX = slotsX;
+        this.slotsY = slotsY;
+        this.guiTexture = guiTexture;
         this.textureWidth = textureWidth;
         this.textureHeight = textureHeight;
     }
@@ -49,15 +49,18 @@ public enum InventoryType {
     public int getTotalSlots() { return rows * columns; }
     public int getRows() { return rows; }
     public int getColumns() { return columns; }
-    public int getSlotsX() { return x; }
-    public int getSlotsY() { return y; }
+    public int getSlotsX() { return slotsX; }
+    public int getSlotsY() { return slotsY; }
     public int getPlayerX() { return 8; }
     public int getPlayerY() { return textureHeight - 82; }
-    public ResourceLocation getTexture() { return texture; }
+    public ResourceLocation getGuiTexture() { return guiTexture; }
     public int getTextureWidth() { return textureWidth; }
     public int getTextureHeight() { return  textureHeight; }
 
-    public int getID() { return ordinal(); }
-    public static InventoryType getType(int id) { return values()[id % values().length]; }
+    public int getID() {return ordinal(); }
+
+    public static InventoryType getType(int id) {
+        return values()[id % values().length];
+    }
 
 }

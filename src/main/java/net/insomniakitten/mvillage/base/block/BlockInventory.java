@@ -41,10 +41,12 @@ import javax.annotation.Nullable;
 public class BlockInventory extends BlockMV {
 
     private final static GuiType GUI = GuiType.INVENTORY;
+    private InventoryType type;
 
-    public BlockInventory(String name) {
-        super(name, Material.WOOD, SoundType.WOOD, 10.0f, 0.5f);
+    public BlockInventory(String name, InventoryType type) {
+        super(name, Material.WOOD, SoundType.WOOD, 2.0f, 15.0f);
         setBlockType(EnumBlockType.MODEL);
+        this.type = type;
     }
 
     @Override
@@ -80,7 +82,7 @@ public class BlockInventory extends BlockMV {
 
     @Nullable @Override
     public TileEntity createTileEntity(@Nonnull World world, @Nonnull IBlockState state) {
-        return new TileInventory(InventoryType.LARGE);
+        return new TileInventory(type);
     }
 
 }

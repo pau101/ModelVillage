@@ -18,6 +18,7 @@ package net.insomniakitten.mvillage;
 
 import com.google.common.base.Equivalence.Wrapper;
 import net.insomniakitten.mvillage.base.block.BlockInventory;
+import net.insomniakitten.mvillage.base.inventory.InventoryType;
 import net.insomniakitten.mvillage.base.inventory.TileInventory;
 import net.insomniakitten.mvillage.base.item.ItemBlockMV;
 import net.insomniakitten.mvillage.base.util.DataHandler;
@@ -41,18 +42,19 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings("all")
 public class RegistryManager<T extends Enum<T> & IPropertySerializable> {
 
     public static enum Blocks {
-        TEST(new BlockInventory("test_inventory"));
+        TEST(new BlockInventory("test_inventory", InventoryType.MEDIUM));
 
         private final Block block;
-
         Blocks(Block block) { this.block = block; }
-
         public Block getBlock() { return block; }
     }
 
@@ -60,9 +62,7 @@ public class RegistryManager<T extends Enum<T> & IPropertySerializable> {
         ;
 
         private final Item item;
-
         Items(Item item) { this.item = item; }
-
         public Item getItem() { return item; }
     }
 
@@ -71,12 +71,10 @@ public class RegistryManager<T extends Enum<T> & IPropertySerializable> {
 
         private final Class<? extends TileEntity> tile;
         private final ResourceLocation key;
-
         Tiles(Class<? extends TileEntity> tile, ResourceLocation key) {
             this.tile = tile;
             this.key = key;
         }
-
         public Class<? extends TileEntity> getTile() { return tile; }
         public ResourceLocation getKey() { return key; }
     }

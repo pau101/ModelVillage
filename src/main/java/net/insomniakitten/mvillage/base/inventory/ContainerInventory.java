@@ -70,24 +70,24 @@ public class ContainerInventory extends Container {
     @Override @Nonnull
     public ItemStack transferStackInSlot(EntityPlayer player, int index) {
         Slot slot = inventorySlots.get(index);
-        ItemStack stack = slot.getStack();
+        ItemStack original = slot.getStack();
+        ItemStack stack = original.copy();
 
         if (slot.getHasStack()) {
-            int playerMinSlot = type.getTotalSlots() - 1;
-            int playerTotalSlots = 28 + 9;
-            int playerMaxSlot = playerMinSlot + playerTotalSlots;
 
-            if (index > playerMinSlot) {
-                if (!this.mergeItemStack(stack, 0, playerMinSlot, false))
+            int containerSlots = type.getTotalSlots();
+
+            if (index >= containerSlots) {
+                if (!mergeItemStack(stack, 0, containerSlots, false))
                     return ItemStack.EMPTY; // Inventory -> Slot
-            } else if (!mergeItemStack(stack, playerMinSlot, playerMaxSlot, true))
+            } else if (!mergeItemStack(stack, containerSlots, containerSlots + 36, true))
                 return ItemStack.EMPTY; // Slot -> Inventory
 
             slot.onSlotChanged();
 
-            if (stack.isEmpty()) slot.putStack(ItemStack.EMPTY);
-            else if (stack.getCount() == slot.getStack().getCount())
-                return ItemStack.EMPTY;
+            if (stack.isEmpty()) {
+                slot.putStack(ItemStack.EMPTY);
+            }
 
             slot.onTake(player, stack);
 

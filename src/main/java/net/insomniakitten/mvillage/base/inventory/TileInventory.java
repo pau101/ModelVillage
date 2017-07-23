@@ -40,16 +40,16 @@ public class TileInventory extends TileEntity {
     @CapabilityInject(IItemHandler.class)
     private static final Capability<IItemHandler> CAPABILITY = null;
 
-    private InventoryType type;
-    private ItemStackHandler inventory;
+    private InventoryType inventoryType;
+    private ItemStackHandler itemStackHandler;
 
     public TileInventory() {
         // no-op
     }
 
     public TileInventory(InventoryType type) {
-        this.type = type;
-        this.inventory = new ItemStackHandler(type.getTotalSlots());
+        inventoryType = type;
+        itemStackHandler = new ItemStackHandler(type.getTotalSlots());
     }
 
     public static Capability<IItemHandler> getCapability() {
@@ -57,7 +57,7 @@ public class TileInventory extends TileEntity {
     }
 
     public InventoryType getInventoryType() {
-        return this.type;
+        return inventoryType;
     }
 
     @Override
@@ -68,23 +68,23 @@ public class TileInventory extends TileEntity {
     @Override
     public <T> T getCapability(@Nonnull Capability<T> cap, @Nullable EnumFacing facing) {
         if (cap == CAPABILITY)
-            return CAPABILITY.cast(this.inventory);
+            return CAPABILITY.cast(itemStackHandler);
         else return super.getCapability(cap, facing);
     }
 
     @Override
     public final void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
-        this.type = InventoryType.getType(nbt.getInteger("type"));
-        this.inventory = new ItemStackHandler(this.type.getTotalSlots());
-        this.inventory.deserializeNBT(nbt.getCompoundTag("contents"));
+        inventoryType = InventoryType.getType(nbt.getInteger("type"));
+        itemStackHandler = new ItemStackHandler(inventoryType.getTotalSlots());
+        itemStackHandler.deserializeNBT(nbt.getCompoundTag("contents"));
     }
 
     @Override @Nonnull
     public final NBTTagCompound writeToNBT(NBTTagCompound nbt) {
         super.writeToNBT(nbt);
-        nbt.setInteger("type", this.type.getID());
-        nbt.setTag("contents", this.inventory.serializeNBT());
+        nbt.setInteger("type", inventoryType.getID());
+        nbt.setTag("contents", itemStackHandler.serializeNBT());
         return nbt;
     }
 

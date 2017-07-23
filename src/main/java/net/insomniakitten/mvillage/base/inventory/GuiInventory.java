@@ -24,13 +24,13 @@ import net.minecraft.tileentity.TileEntity;
 
 public class GuiInventory extends GuiContainer {
 
-    private TileEntity tile;
-    private InventoryType type;
+    private TileEntity tileEntity;
+    private InventoryType inventoryType;
 
     public GuiInventory(TileInventory tile, EntityPlayer player) {
         super(new ContainerInventory(tile, player));
-        this.tile = tile;
-        this.type = tile != null ? tile.getInventoryType() : InventoryType.NONE;
+        tileEntity = tile;
+        inventoryType = tile != null ? tile.getInventoryType() : InventoryType.NONE;
     }
 
     @Override
@@ -41,21 +41,27 @@ public class GuiInventory extends GuiContainer {
     }
 
     @Override
+    public void initGui() {
+        xSize = inventoryType.getTextureWidth();
+        ySize = inventoryType.getTextureHeight();
+        super.initGui();
+    }
+
+    @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        String container = I18n.format(tile.getBlockType().getUnlocalizedName()+ ".name");
+        String container = I18n.format(tileEntity.getBlockType().getUnlocalizedName()+ ".name");
         String player = I18n.format("container.inventory");
-        this.fontRenderer.drawString(container, 8, 6, 4210752);
-        int padding = fontRenderer.FONT_HEIGHT + 2;
-        this.fontRenderer.drawString(player, 8, type.getPlayerY() - padding, 4210752);
+        int containerLabelY = inventoryType.getSlotsY() - (fontRenderer.FONT_HEIGHT + 2);
+        int playerLabelY = inventoryType.getPlayerY() - (fontRenderer.FONT_HEIGHT + 2);
+        fontRenderer.drawString(container, inventoryType.getSlotsX(), containerLabelY, 4210752);
+        fontRenderer.drawString(player, inventoryType.getPlayerX(), playerLabelY, 4210752);
     }
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         GlStateManager.color(1f, 1f, 1f);
-        this.mc.getTextureManager().bindTexture(type.getTexture());
-        int x = (width - type.getTextureWidth()) / 2;
-        int y = (height - type.getTextureHeight()) / 2;
-        this.drawTexturedModalRect(x, y, 0, 0, type.getTextureWidth(), type.getTextureHeight());
+        mc.getTextureManager().bindTexture(inventoryType.getGuiTexture());
+        drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
     }
 
 }

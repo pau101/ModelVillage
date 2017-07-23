@@ -37,15 +37,15 @@ public class BlockMV extends Block {
 
     public BlockMV(
             String name, Material material, SoundType sound,
-            float resistance, float hardness) {
+            float hardness, float resistance) {
         super(material);
         blockType = EnumBlockType.CUBE;
         axisAlignedBB = FULL_BLOCK_AABB;
         setRegistryName(name);
         setUnlocalizedName(ModelVillage.MOD_ID + "." + name);
         setSoundType(sound);
-        setResistance(resistance);
         setHardness(hardness);
+        setResistance(resistance);
         setCreativeTab(ModelVillage.CTAB);
         handleItemBlock();
     }
