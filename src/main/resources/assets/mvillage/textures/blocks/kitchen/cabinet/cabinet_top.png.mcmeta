@@ -3,6 +3,7 @@
         "ctm_version": 1,
 		"type": "CTM",
         "layer":"SOLID",
-		"textures": [ "mvillage:blocks/kitchen/cabinet/cabinet_top_ctm" ]
+		"textures": [ "mvillage:blocks/kitchen/cabinet/cabinet_top_ctm" ],
+		"extra": { "ignoreStates": true }
     }
 }
