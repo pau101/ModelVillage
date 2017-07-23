@@ -38,9 +38,10 @@ public class GuiManager implements IGuiHandler {
         switch (GuiType.get(ID)) {
             case INVENTORY:
                 return new ContainerInventory((TileInventory) tile, player);
-            default:
-                return null;
+            case MACHINE:
+                break;
         }
+        return null;
     }
 
     @Nullable
@@ -51,13 +52,14 @@ public class GuiManager implements IGuiHandler {
         switch (GuiType.get(ID)) {
             case INVENTORY:
                 return new GuiInventory((TileInventory) tile, player);
-            default:
-                return null;
+            case MACHINE:
+                break;
         }
+        return null;
     }
 
     public enum GuiType {
-        INVENTORY;
+        INVENTORY, MACHINE;
 
         public static GuiType get(int id) { return values()[id % values().length]; }
         public int getID() { return ordinal(); }
