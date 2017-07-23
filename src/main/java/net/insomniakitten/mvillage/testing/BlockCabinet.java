@@ -36,21 +36,21 @@ public class BlockCabinet extends BlockCardinal implements IContainer {
     }
 
     @Override
-    public InventoryType getInventoryType() {
-        return InventoryType.LARGE;
-    }
-
-    @Override
     public boolean onBlockActivated(
             World world, BlockPos pos, IBlockState state,
             EntityPlayer player, EnumHand hand, EnumFacing facing,
             float hitX, float hitY, float hitZ) {
         if (facing == state.getValue(getProperty())) {
+            // Open GUI if interacting with front of cabinet
             onTileInteract(world, pos, player);
             return true;
         }
         else return false;
     }
 
+    @Override
+    public InventoryType getInventoryType() {
+        return InventoryType.LARGE;
+    }
 
 }

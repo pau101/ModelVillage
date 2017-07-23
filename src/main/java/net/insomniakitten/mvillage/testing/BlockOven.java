@@ -21,12 +21,31 @@ import net.insomniakitten.mvillage.base.inventory.InventoryType;
 import net.insomniakitten.mvillage.base.util.IContainer;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public class BlockOven extends BlockCardinal implements IContainer {
 
     public BlockOven() {
         super("oven", Material.IRON, SoundType.METAL, 2.0f, 15.0f);
         setBlockType(EnumBlockType.MODEL);
+    }
+
+    @Override
+    public boolean onBlockActivated(
+            World world, BlockPos pos, IBlockState state,
+            EntityPlayer player, EnumHand hand, EnumFacing facing,
+            float hitX, float hitY, float hitZ) {
+        if (facing == EnumFacing.UP || facing == state.getValue(getProperty())) {
+            // Open GUI if interacting with front or top of oven
+            onTileInteract(world, pos, player);
+            return true;
+        }
+        else return false;
     }
 
     @Override
