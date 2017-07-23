@@ -17,6 +17,7 @@ package net.insomniakitten.mvillage.base.block;
  */
 
 import net.insomniakitten.mvillage.base.inventory.InventoryType;
+import net.insomniakitten.mvillage.base.util.IContainer;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 
@@ -29,7 +30,7 @@ public class BlockTestInventory extends BlockMV implements IContainer {
 
     @Override
     public InventoryType getInventoryType() {
-        return InventoryType.MEDIUM;
+        return InventoryType.LARGE;
     }
 
 }

@@ -16,7 +16,7 @@ package net.insomniakitten.mvillage;
  *   limitations under the License.
  */
 
-import net.insomniakitten.mvillage.base.gui.GuiManager;
+import net.insomniakitten.mvillage.base.util.GuiManager;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;

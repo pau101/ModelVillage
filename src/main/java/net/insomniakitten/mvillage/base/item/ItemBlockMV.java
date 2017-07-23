@@ -54,30 +54,34 @@ public class ItemBlockMV<T extends Enum<T> & IPropertySerializable> extends Item
     }
 
     @Override
-    public void getSubItems(
-            @Nonnull CreativeTabs tab,
-            @Nonnull NonNullList<ItemStack> items) {
-        if (!this.isInCreativeTab(tab)) return;
-        if (objects == null) super.getSubItems(tab, items);
-        else for (int i = 0; i < objects.length; ++i) {
+    public void getSubItems(@Nonnull CreativeTabs tab, @Nonnull NonNullList<ItemStack> items) {
+        if (!isInCreativeTab(tab)) return;
+        if (objects == null) {
+            super.getSubItems(tab, items);
+        } else for (int i = 0; i < objects.length; ++i) {
             items.add(new ItemStack(this, 1, i));
         }
     }
 
     @Override @Nonnull
     public String getUnlocalizedName(@Nonnull ItemStack stack) {
-        if (objects == null) return super.getUnlocalizedName(stack);
-        int meta = stack.getMetadata() % objects.length;
-        String type = objects[meta].getName();
-        return this.getBlock().getUnlocalizedName() + "." + type;
+        if (objects == null) {
+            return super.getUnlocalizedName(stack);
+        } else {
+            int meta = stack.getMetadata() % objects.length;
+            String type = objects[meta].getName();
+            return getBlock().getUnlocalizedName() + "." + type;
+        }
     }
 
     @Override @SideOnly(Side.CLIENT)
     public void addInformation(
             @Nonnull ItemStack stack, @Nullable World world,
             @Nonnull List<String> tooltip, @Nonnull ITooltipFlag flag) {
-        String key = this.getUnlocalizedName(stack) + ".tooltip";
-        if (I18n.hasKey(key)) tooltip.add(I18n.format(key));
+        String key = getUnlocalizedName(stack) + ".tooltip";
+        if (I18n.hasKey(key)) {
+            tooltip.add(I18n.format(key));
+        }
     }
 
     @Override

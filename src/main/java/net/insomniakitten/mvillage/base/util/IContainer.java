@@ -1,4 +1,4 @@
-package net.insomniakitten.mvillage.base.block;
+package net.insomniakitten.mvillage.base.util;
 
 /*
  *  Copyright 2017 InsomniaKitten
@@ -17,9 +17,9 @@ package net.insomniakitten.mvillage.base.block;
  */
 
 import net.insomniakitten.mvillage.ModelVillage;
-import net.insomniakitten.mvillage.base.gui.GuiManager.GuiType;
 import net.insomniakitten.mvillage.base.inventory.InventoryType;
 import net.insomniakitten.mvillage.base.inventory.TileInventory;
+import net.insomniakitten.mvillage.base.util.GuiManager.GuiType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryHelper;
@@ -31,9 +31,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.common.network.internal.FMLNetworkHandler;
 import net.minecraftforge.items.IItemHandler;
 
-import javax.annotation.Nonnull;
-
-public interface IContainer {
+public interface IContainer extends ITileHolder {
 
     /**
      * This is what tells the base class which inventory type you want attached to your block.
@@ -41,21 +39,20 @@ public interface IContainer {
      */
     InventoryType getInventoryType();
 
-    /**
-     * Called in the base block class when the block is right clicked by a player
-     * All parameters are provided by Block#onBlockActivated
-     */
-    default void handleContainerGui(World world, BlockPos pos, EntityPlayer player) {
+    @Override
+    default TileEntity getTileEntity() {
+        return new TileInventory(getInventoryType());
+    }
+
+    @Override
+    default void onTileInteract(World world, BlockPos pos, EntityPlayer player) {
         FMLNetworkHandler.openGui(
                 player, ModelVillage.getInstance(), GuiType.INVENTORY.getID(),
                 world, pos.getX(), pos.getY(), pos.getZ());
     }
 
-    /**
-     * Called in the base block class when the block is broken
-     * All parameters are provided by Block#breakBlock
-     */
-    default void handleItemDrops(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state) {
+    @Override
+    default void onTileRemove(World world, BlockPos pos, IBlockState state) {
         Capability<IItemHandler> items = TileInventory.getCapability();
         TileEntity tile = world.getTileEntity(pos);
         if (tile != null && tile instanceof TileInventory && tile.hasCapability(items, null)) {

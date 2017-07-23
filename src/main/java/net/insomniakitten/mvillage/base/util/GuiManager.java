@@ -1,4 +1,4 @@
-package net.insomniakitten.mvillage.base.gui;
+package net.insomniakitten.mvillage.base.util;
 
 /*
  *  Copyright 2017 InsomniaKitten

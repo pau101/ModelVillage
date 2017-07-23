@@ -18,7 +18,7 @@ package net.insomniakitten.mvillage.base.block;
 
 import net.insomniakitten.mvillage.ModelVillage;
 import net.insomniakitten.mvillage.RegistryManager.ObjectRegistry;
-import net.insomniakitten.mvillage.base.inventory.TileInventory;
+import net.insomniakitten.mvillage.base.util.ITileHolder;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -116,31 +116,31 @@ public class BlockMV extends Block {
             World world, BlockPos pos, IBlockState state,
             EntityPlayer player, EnumHand hand, EnumFacing facing,
             float hitX, float hitY, float hitZ) {
-        if (this instanceof IContainer) {
-            ((IContainer) this).handleContainerGui(world, pos, player);
+        if (this instanceof ITileHolder) {
+            ((ITileHolder) this).onTileInteract(world, pos, player);
             return true;
         }
         else return super.onBlockActivated(world, pos, state, player, hand, facing, hitX, hitY, hitZ);
     }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state) {
-        if (this instanceof IContainer) {
-            ((IContainer) this).handleItemDrops(world, pos, state);
+    public void breakBlock(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state) {
+        if (this instanceof ITileHolder) {
+            ((ITileHolder) this).onTileRemove(world, pos, state);
         }
         else super.breakBlock(world, pos, state);
     }
 
     @Override
     public boolean hasTileEntity(IBlockState state) {
-        return this instanceof IContainer;
+        return this instanceof ITileHolder;
     }
 
     @Nullable
     @Override
     public TileEntity createTileEntity(@Nonnull World world, @Nonnull IBlockState state) {
-        if (this instanceof IContainer) {
-            return new TileInventory(((IContainer) this).getInventoryType());
+        if (this instanceof ITileHolder) {
+            return ((ITileHolder) this).getTileEntity();
         }
         else return null;
     }
