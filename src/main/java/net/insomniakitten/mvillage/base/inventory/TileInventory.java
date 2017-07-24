@@ -50,7 +50,7 @@ public class TileInventory extends TileEntity {
 
     public TileInventory(InventoryType type) {
         this.type = type;
-        inventory = new InventoryHandler(this, type);
+        inventory = new InventoryHandler<>(this, type);
     }
 
     public static Capability<IItemHandler> getCapability() {
@@ -77,7 +77,7 @@ public class TileInventory extends TileEntity {
     public final void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
         type = InventoryType.getType(nbt.getInteger("type"));
-        inventory = new InventoryHandler(this, type);
+        inventory = new InventoryHandler<>(this, type);
         inventory.deserializeNBT(nbt.getCompoundTag("contents"));
     }
 

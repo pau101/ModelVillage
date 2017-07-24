@@ -16,41 +16,64 @@ package net.insomniakitten.mvillage.base.machine;
  *   limitations under the License.
  */
 
-import javafx.util.Pair;
+import net.insomniakitten.mvillage.ModelVillage;
+import net.insomniakitten.mvillage.base.util.IContainerType;
 import net.minecraft.util.ResourceLocation;
+import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
-public enum MachineType {
+public enum MachineType implements IContainerType {
+
+    CRAFTING(new ArrayList<Pair<Integer, Integer>>(){{
+        add(Pair.of(30, 17));
+        add(Pair.of(48, 17));
+        add(Pair.of(66, 17));
+        add(Pair.of(30, 35));
+        add(Pair.of(48, 35));
+        add(Pair.of(66, 35));
+        add(Pair.of(30, 53));
+        add(Pair.of(48, 53));
+        add(Pair.of(66, 53));
+        add(Pair.of(120, 31));
+    }}, new ResourceLocation(ModelVillage.MOD_ID, "textures/gui/crafting.png"), 176, 166),
+    SMELTING(new ArrayList<Pair<Integer, Integer>>(){{
+        add(Pair.of(56, 18));
+        add(Pair.of(56, 54));
+        add(Pair.of(112, 32));
+    }}, new ResourceLocation(ModelVillage.MOD_ID, "textures/gui/smelting.png"), 176, 166)
     ;
 
-    // slot id, <x, y>
-    private final Map<Integer, Pair<Integer, Integer>> slots;
+    private final List<Pair<Integer, Integer>> itemSlots;
     private final ResourceLocation guiTexture;
     private final int textureWidth;
     private final int textureHeight;
 
-    MachineType(Map<Integer, Pair<Integer, Integer>> slots,
+    MachineType(List<Pair<Integer, Integer>> itemSlots,
                 ResourceLocation guiTexture, int textureWidth, int textureHeight) {
-        this.slots = slots;
+        this.itemSlots = itemSlots;
         this.guiTexture = guiTexture;
         this.textureWidth = textureWidth;
         this.textureHeight = textureHeight;
     }
 
-    public int getTotalSlots() { return slots.size(); }
-    public int getSlotX(int slot) { return slots.get(slot).getKey(); }
-    public int getSlotY(int slot) { return slots.get(slot).getValue(); }
+
+    public List<Pair<Integer, Integer>> getSlots() { return itemSlots; }
+    public int getSlotX(int slot) { return itemSlots.get(slot).getLeft(); }
+    public int getSlotY(int slot) { return itemSlots.get(slot).getRight(); }
     public int getPlayerX() { return 8; }
     public int getPlayerY() { return textureHeight - 82; }
     public ResourceLocation getGuiTexture() { return guiTexture; }
     public int getTextureWidth() { return textureWidth; }
     public int getTextureHeight() { return  textureHeight; }
 
+    @Override
+    public int getTotalSlots() { return itemSlots.size(); }
+
+    @Override
     public int getID() {return ordinal(); }
 
-    public static MachineType getType(int id) {
-        return values()[id % values().length];
-    }
+    public MachineType getType(int id) { return values()[id % values().length]; }
 
 }

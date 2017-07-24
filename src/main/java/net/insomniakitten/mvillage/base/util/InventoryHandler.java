@@ -16,26 +16,20 @@ package net.insomniakitten.mvillage.base.util;
  *   limitations under the License.
  */
 
-import net.insomniakitten.mvillage.base.inventory.InventoryType;
-import net.insomniakitten.mvillage.base.machine.MachineType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.items.ItemStackHandler;
 
-import static net.minecraftforge.common.util.Constants.NBT.*;
+import static net.minecraftforge.common.util.Constants.NBT.TAG_COMPOUND;
+import static net.minecraftforge.common.util.Constants.NBT.TAG_INT;
 
-public class InventoryHandler extends ItemStackHandler {
+public class InventoryHandler<K extends IContainerType> extends ItemStackHandler {
 
     private TileEntity tile;
 
-    public InventoryHandler(TileEntity tile, InventoryType type) {
-        setSize(type.getTotalSlots());
-        this.tile = tile;
-    }
-
-    public InventoryHandler(TileEntity tile, MachineType type) {
+    public InventoryHandler(TileEntity tile, K type) {
         setSize(type.getTotalSlots());
         this.tile = tile;
     }

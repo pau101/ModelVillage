@@ -17,15 +17,17 @@ package net.insomniakitten.mvillage.base.inventory;
  */
 
 import net.insomniakitten.mvillage.ModelVillage;
+import net.insomniakitten.mvillage.base.util.IContainerType;
 import net.minecraft.util.ResourceLocation;
 
-public enum InventoryType {
+public enum InventoryType implements IContainerType {
 
     GRID(3, 3, 62, 17, new ResourceLocation(ModelVillage.MOD_ID, "textures/gui/grid.png"), 176, 166),
     SMALL(1, 5, 44, 20, new ResourceLocation(ModelVillage.MOD_ID, "textures/gui/small.png"), 176, 133),
     MEDIUM(2, 9, 8, 27, new ResourceLocation(ModelVillage.MOD_ID, "textures/gui/medium.png"), 176, 166),
     LARGE(3, 9, 8, 18, new ResourceLocation(ModelVillage.MOD_ID, "textures/gui/large.png"), 176, 166),
-    NONE(0, 0, 0, 0, new ResourceLocation(ModelVillage.MOD_ID, "textures/gui/none.png"), 176, 166);
+    NONE(0, 0, 0, 0, new ResourceLocation(ModelVillage.MOD_ID, "textures/gui/none.png"), 176, 166)
+    ;
 
     private final int rows;
     private final int columns;
@@ -46,7 +48,6 @@ public enum InventoryType {
         this.textureHeight = textureHeight;
     }
 
-    public int getTotalSlots() { return rows * columns; }
     public int getRows() { return rows; }
     public int getColumns() { return columns; }
     public int getSlotsX() { return slotsX; }
@@ -57,10 +58,11 @@ public enum InventoryType {
     public int getTextureWidth() { return textureWidth; }
     public int getTextureHeight() { return  textureHeight; }
 
+    @Override
+    public int getTotalSlots() { return rows * columns; }
+
     public int getID() {return ordinal(); }
 
-    public static InventoryType getType(int id) {
-        return values()[id % values().length];
-    }
+    public static InventoryType getType(int id) { return values()[id % values().length]; }
 
 }
