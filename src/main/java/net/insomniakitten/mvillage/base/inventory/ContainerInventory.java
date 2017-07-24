@@ -16,10 +16,12 @@ package net.insomniakitten.mvillage.base.inventory;
  *   limitations under the License.
  */
 
+import net.insomniakitten.mvillage.base.util.IContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -29,11 +31,13 @@ import javax.annotation.Nonnull;
 
 public class ContainerInventory extends Container {
 
+    private TileEntity tile;
     private InventoryType type;
 
     public ContainerInventory(TileInventory tile, EntityPlayer player) {
         Capability<IItemHandler> items = CapabilityItemHandler.ITEM_HANDLER_CAPABILITY;
         IItemHandler inventory = tile.hasCapability(items, null) ? tile.getCapability(items, null) : null;
+        this.tile = tile;
         this.type = tile.getInventoryType();
         createContainerSlots(inventory);
         createPlayerSlots(player);
@@ -65,6 +69,15 @@ public class ContainerInventory extends Container {
             int y = type.getPlayerY() + 58;
             addSlotToContainer(new Slot(player.inventory, column, x, y));
         }
+    }
+
+    @Override
+    public void onContainerClosed(EntityPlayer player) {
+        IContainer block = ((IContainer) tile.getBlockType());
+        if(block.hasInteractionSound()) {
+            block.playSound(true, player.world, tile.getPos());
+        }
+        super.onContainerClosed(player);
     }
 
     @Override @Nonnull

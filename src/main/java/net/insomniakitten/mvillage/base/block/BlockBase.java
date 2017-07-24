@@ -20,6 +20,8 @@ import net.insomniakitten.mvillage.ModelVillage;
 import net.insomniakitten.mvillage.RegistryManager.ObjectRegistry;
 import net.insomniakitten.mvillage.base.util.ITileHolder;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockAir;
+import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -37,6 +39,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+@SuppressWarnings("deprecation")
 public class BlockBase extends Block {
 
     private EnumBlockType blockType;
@@ -99,14 +102,22 @@ public class BlockBase extends Block {
         return blockType == EnumBlockType.CUBE;
     }
 
-    @Override
+    @Override @Nonnull
     public EnumBlockRenderType getRenderType(IBlockState state) {
         return EnumBlockRenderType.MODEL;
     }
 
-    @Override
+    @Override @Nonnull
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         return axisAlignedBB;
+    }
+
+    @Override
+    public boolean doesSideBlockRendering(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing face) {
+        if (blockType != EnumBlockType.MODEL) return true;
+        IBlockState up = world.getBlockState(pos.up());
+        IBlockState other = world.getBlockState(pos.offset(face));
+        return other.getBlock() instanceof BlockLiquid && !(up.getBlock() instanceof BlockAir);
     }
 
     @Override
@@ -115,8 +126,7 @@ public class BlockBase extends Block {
             EntityPlayer player, EnumHand hand, EnumFacing facing,
             float hitX, float hitY, float hitZ) {
         if (this instanceof ITileHolder) {
-            ((ITileHolder) this).onTileInteract(world, pos, player);
-            return true;
+            return ((ITileHolder) this).onTileInteract(world, pos, player);
         }
         else return super.onBlockActivated(world, pos, state, player, hand, facing, hitX, hitY, hitZ);
     }

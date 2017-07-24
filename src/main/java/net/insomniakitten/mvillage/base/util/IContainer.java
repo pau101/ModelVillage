@@ -22,9 +22,12 @@ import net.insomniakitten.mvillage.base.inventory.TileInventory;
 import net.insomniakitten.mvillage.base.util.GuiManager.GuiType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
@@ -39,16 +42,20 @@ public interface IContainer extends ITileHolder {
      */
     InventoryType getInventoryType();
 
+    boolean hasInteractionSound();
+
     @Override
     default TileEntity getTileEntity() {
         return new TileInventory(getInventoryType());
     }
 
     @Override
-    default void onTileInteract(World world, BlockPos pos, EntityPlayer player) {
+    default boolean onTileInteract(World world, BlockPos pos, EntityPlayer player) {
+        playSound(false, world, pos);
         FMLNetworkHandler.openGui(
                 player, ModelVillage.getInstance(), GuiType.INVENTORY.getID(),
                 world, pos.getX(), pos.getY(), pos.getZ());
+        return true;
     }
 
     @Override
@@ -65,6 +72,12 @@ public interface IContainer extends ITileHolder {
                 }
             }
         }
+    }
+
+    default void playSound(boolean isClosing, World world, BlockPos pos) {
+        if (!hasInteractionSound()) return;
+        SoundEvent sound = isClosing ? SoundEvents.BLOCK_CHEST_CLOSE : SoundEvents.BLOCK_CHEST_OPEN;
+        world.playSound(null, pos, sound, SoundCategory.BLOCKS, 1.0f, 1.0f);
     }
 
 }

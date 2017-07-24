@@ -16,32 +16,28 @@ package net.insomniakitten.mvillage.base.util;
  *   limitations under the License.
  */
 
+import net.insomniakitten.mvillage.base.machine.TileMachine;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public interface ITileHolder {
+public interface IMachine extends ITileHolder {
 
+    @Override
     default TileEntity getTileEntity() {
-        return null;
+        return new TileMachine();
     }
 
-    /**
-     * Called in the base block class when the tile's block is right clicked by a player
-     * All parameters are provided by Block#onBlockActivated
-     */
+    @Override
     default boolean onTileInteract(World world, BlockPos pos, EntityPlayer player) {
         return false;
     }
 
-    /**
-     * Called in the base block class when the tile's block is broken
-     * All parameters are provided by Block#breakBlock
-     */
+    @Override
     default void onTileRemove(World world, BlockPos pos, IBlockState state) {
-        // no-op
+
     }
 
 }

@@ -31,6 +31,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 
+@SuppressWarnings("deprecation")
 public class BlockCardinal extends BlockBase {
 
     private static final PropertyDirection FACING = BlockHorizontal.FACING;
@@ -44,7 +45,7 @@ public class BlockCardinal extends BlockBase {
         return FACING;
     }
 
-    @Override
+    @Override @Nonnull
     public IBlockState getStateFromMeta(int meta) {
         EnumFacing facing = EnumFacing.getHorizontal(meta);
         return this.getDefaultState().withProperty(FACING, facing);
@@ -63,7 +64,7 @@ public class BlockCardinal extends BlockBase {
         return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
     }
 
-    @Override
+    @Override @Nonnull
     public IBlockState withRotation(@Nonnull IBlockState state, Rotation rot) {
         return state.withProperty(FACING, rot.rotate(state.getValue(FACING)));
     }

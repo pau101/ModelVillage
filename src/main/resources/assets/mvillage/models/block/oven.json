@@ -11,21 +11,21 @@
 		"hob": "mvillage:blocks/kitchen/oven/oven_hob",
 		"down": "mvillage:blocks/kitchen/oven/oven_down"
 	},
-	"elements": [
+	"elements": [ 	 
 		{
-			"__comment": "Cube1",
-			"from": [ 0, 14, 1 ],
+			"__comment": "up",
+			"from": [ 0, 14, 2 ],
 			"to": [ 16, 15, 14 ],
 			"faces": {
-				"down": { "uv": [ 0, 2, 16, 15 ], "texture": "#down" },
-				"up": { "uv": [ 0, 1, 16, 14 ], "texture": "#up" },
+				"down": { "uv": [ 0, 2, 16, 14 ], "texture": "#down" },
+				"up": { "uv": [ 0, 2, 16, 14 ], "texture": "#up" },
 				"north": { "uv": [ 0, 1, 16, 2 ], "texture": "#front" },
-				"west": { "uv": [ 1, 1, 14, 2 ], "texture": "#west", "cullface": "west" },
-				"east": { "uv": [ 2, 1, 15, 2 ], "texture": "#east", "cullface": "east" }
+				"west": { "uv": [ 2, 1, 14, 2 ], "texture": "#west", "cullface": "west" },
+				"east": { "uv": [ 2, 1, 14, 2 ], "texture": "#east", "cullface": "east" }
 			}
 		},
 		{
-			"__comment": "Cube1",
+			"__comment": "door",
 			"from": [ 0, 1, 1 ],
 			"to": [ 16, 13, 2 ],
 			"faces": {
@@ -37,7 +37,7 @@
 			}
 		},
 		{
-			"__comment": "Cube8",
+			"__comment": "hob_ne",
 			"from": [ 9, 15, 4 ],
 			"to": [ 13, 16, 8 ],
 			"faces": {
@@ -49,7 +49,7 @@
 			}
 		},
 		{
-			"__comment": "Cube8",
+			"__comment": "hob_sw",
 			"from": [ 3, 15, 9 ],
 			"to": [ 7, 16, 13 ],
 			"faces": {
@@ -61,7 +61,7 @@
 			}
 		},
 		{
-			"__comment": "Cube8",
+			"__comment": "hob_nw",
 			"from": [ 3, 15, 4 ],
 			"to": [ 7, 16, 8 ],
 			"faces": {
@@ -73,7 +73,7 @@
 			}
 		},
 		{
-			"__comment": "Cube8",
+			"__comment": "hob_se",
 			"from": [ 9, 15, 9 ],
 			"to": [ 13, 16, 13 ],
 			"faces": {
@@ -85,7 +85,7 @@
 			}
 		},
 		{
-			"__comment": "Cube1",
+			"__comment": "panel_east",
 			"from": [ 15, 0, 2 ],
 			"to": [ 16, 14, 15 ],
 			"faces": {
@@ -97,7 +97,7 @@
 			}
 		},
 		{
-			"__comment": "Cube1",
+			"__comment": "panel_west",
 			"from": [ 0, 0, 2 ],
 			"to": [ 1, 14, 15 ],
 			"faces": {
@@ -109,7 +109,7 @@
 			}
 		},
 		{
-			"__comment": "Cube1",
+			"__comment": "down",
 			"from": [ 1, 0, 2 ],
 			"to": [ 15, 1, 15 ],
 			"faces": {
@@ -119,7 +119,7 @@
 			}
 		},
 		{
-			"__comment": "Cube17",
+			"__comment": "south_lower",
 			"from": [ 0, 0, 15 ],
 			"to": [ 16, 14, 16 ],
 			"faces": {
@@ -131,7 +131,7 @@
 			}
 		},
 		{
-			"__comment": "Cube18",
+			"__comment": "south_mid",
 			"from": [ 0, 14, 14 ],
 			"to": [ 16, 16, 16 ],
 			"faces": {
@@ -143,7 +143,7 @@
 			}
 		},
 		{
-			"__comment": "Cube18",
+			"__comment": "south_upper",
 			"from": [ 0, 16, 14 ],
 			"to": [ 16, 18, 16 ],
 			"faces": {
@@ -155,7 +155,7 @@
 			}
 		},
 		{
-			"__comment": "Cube13",
+			"__comment": "handle",
 			"from": [ 1, 10, 0 ],
 			"to": [ 15, 12, 1 ],
 			"faces": {
@@ -167,7 +167,7 @@
 			}
 		},
 		{
-			"__comment": "Cube19",
+			"__comment": "trim_west",
 			"from": [ 0, 15, 2 ],
 			"to": [ 2, 16, 14 ],
 			"faces": {
@@ -178,7 +178,7 @@
 			}
 		},
 		{
-			"__comment": "Cube19",
+			"__comment": "trim_east",
 			"from": [ 14, 15, 2 ],
 			"to": [ 16, 16, 14 ],
 			"faces": {
@@ -189,26 +189,15 @@
 			}
 		},
 		{
-			"__comment": "Cube1",
+			"__comment": "panel",
 			"from": [ 0, 13, 1 ],
-			"to": [ 16, 14, 2 ],
+			"to": [ 16, 15, 2 ],
 			"faces": {
 				"up": { "uv": [ 0, 1, 16, 2 ], "texture": "#up" },
 				"north": { "uv": [ 0, 2, 16, 3 ], "texture": "#front" },
 				"south": { "uv": [ 0, 2, 16, 3 ], "texture": "#back" },
 				"west": { "uv": [ 1, 2, 2, 3 ], "texture": "#west", "cullface": "west" },
 				"east": { "uv": [ 14, 2, 15, 3 ], "texture": "#east", "cullface": "east" }
-			}
-		},
-		{
-			"__comment": "Cube19",
-			"from": [ 3, 14, 2 ],
-			"to": [ 4, 15, 3 ],
-			"faces": {
-				"up": { "uv": [ 3, 2, 4, 3 ], "texture": "#up", "cullface": "up" },
-				"north": { "uv": [ 12, 1, 13, 2 ], "texture": "#front" },
-				"west": { "uv": [ 2, 1, 3, 2 ], "texture": "#west" },
-				"east": { "uv": [ 13, 1, 14, 2 ], "texture": "#west", "cullface": "east" }
 			}
 		}
 	],

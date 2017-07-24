@@ -31,7 +31,7 @@ import net.minecraft.world.World;
 public class BlockCabinet extends BlockCardinal implements IContainer {
 
     public BlockCabinet() {
-        super("cabinet", Material.IRON, SoundType.METAL, 2.0f, 15.0f);
+        super("cabinet", Material.IRON, SoundType.WOOD, 2.0f, 15.0f);
         setBlockType(EnumBlockType.MODEL);
     }
 
@@ -46,6 +46,11 @@ public class BlockCabinet extends BlockCardinal implements IContainer {
             return true;
         }
         else return false;
+    }
+
+    @Override
+    public boolean hasInteractionSound() {
+        return true;
     }
 
     @Override

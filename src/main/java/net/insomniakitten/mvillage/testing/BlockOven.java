@@ -49,6 +49,11 @@ public class BlockOven extends BlockCardinal implements IContainer {
     }
 
     @Override
+    public boolean hasInteractionSound() {
+        return false;
+    }
+
+    @Override
     public InventoryType getInventoryType() {
         return InventoryType.GRID;
     }
