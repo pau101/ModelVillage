@@ -67,8 +67,7 @@ public interface IContainer extends ITileHolder {
             if (inventory != null && world.getGameRules().getBoolean("doTileDrops")) {
                 for (int i = 0; i < inventory.getSlots(); i++) {
                     ItemStack stack = inventory.getStackInSlot(i);
-                    if (!stack.isEmpty()) InventoryHelper.spawnItemStack(
-                            world, pos.getX(), pos.getY(), pos.getZ(), stack);
+                    InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack);
                 }
             }
         }
