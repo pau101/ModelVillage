@@ -16,6 +16,7 @@ package net.insomniakitten.mvillage.base.inventory;
  *   limitations under the License.
  */
 
+import net.insomniakitten.mvillage.base.util.InventoryHandler;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -40,17 +41,16 @@ public class TileInventory extends TileEntity {
     @CapabilityInject(IItemHandler.class)
     private static final Capability<IItemHandler> CAPABILITY = null;
 
-    private InventoryType inventoryType;
-    private ItemStackHandler itemStackHandler;
+    private InventoryType type;
+    private ItemStackHandler inventory;
 
     public TileInventory() {
         // no-op
     }
 
     public TileInventory(InventoryType type) {
-        inventoryType = type;
-        itemStackHandler = new ItemStackHandler(type.getTotalSlots()) {
-            @Override protected void onContentsChanged(int slot) { markDirty(); } };
+        this.type = type;
+        inventory = new InventoryHandler(this, type);
     }
 
     public static Capability<IItemHandler> getCapability() {
@@ -58,7 +58,7 @@ public class TileInventory extends TileEntity {
     }
 
     public InventoryType getInventoryType() {
-        return inventoryType;
+        return type;
     }
 
     @Override
@@ -69,24 +69,23 @@ public class TileInventory extends TileEntity {
     @Override
     public <T> T getCapability(@Nonnull Capability<T> cap, @Nullable EnumFacing facing) {
         if (cap == CAPABILITY)
-            return CAPABILITY.cast(itemStackHandler);
+            return CAPABILITY.cast(inventory);
         else return super.getCapability(cap, facing);
     }
 
     @Override
     public final void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
-        inventoryType = InventoryType.getType(nbt.getInteger("type"));
-        itemStackHandler = new ItemStackHandler(inventoryType.getTotalSlots()) {
-            @Override protected void onContentsChanged(int slot) { markDirty(); } };
-        itemStackHandler.deserializeNBT(nbt.getCompoundTag("contents"));
+        type = InventoryType.getType(nbt.getInteger("type"));
+        inventory = new InventoryHandler(this, type);
+        inventory.deserializeNBT(nbt.getCompoundTag("contents"));
     }
 
     @Override @Nonnull
     public final NBTTagCompound writeToNBT(NBTTagCompound nbt) {
         super.writeToNBT(nbt);
-        nbt.setInteger("type", inventoryType.getID());
-        nbt.setTag("contents", itemStackHandler.serializeNBT());
+        nbt.setInteger("type", type.getID());
+        nbt.setTag("contents", inventory.serializeNBT());
         return nbt;
     }
 
