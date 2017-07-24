@@ -114,7 +114,7 @@ public class BlockBase extends Block {
 
     @Override
     public boolean doesSideBlockRendering(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing face) {
-        if (blockType != EnumBlockType.MODEL) return true;
+        if (blockType != EnumBlockType.MODEL) return false;
         IBlockState up = world.getBlockState(pos.up());
         IBlockState other = world.getBlockState(pos.offset(face));
         return other.getBlock() instanceof BlockLiquid && !(up.getBlock() instanceof BlockAir);
