@@ -49,7 +49,8 @@ public class TileInventory extends TileEntity {
 
     public TileInventory(InventoryType type) {
         inventoryType = type;
-        itemStackHandler = new ItemStackHandler(type.getTotalSlots());
+        itemStackHandler = new ItemStackHandler(type.getTotalSlots()) {
+            @Override protected void onContentsChanged(int slot) { markDirty(); } };
     }
 
     public static Capability<IItemHandler> getCapability() {
@@ -76,7 +77,8 @@ public class TileInventory extends TileEntity {
     public final void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
         inventoryType = InventoryType.getType(nbt.getInteger("type"));
-        itemStackHandler = new ItemStackHandler(inventoryType.getTotalSlots());
+        itemStackHandler = new ItemStackHandler(inventoryType.getTotalSlots()) {
+            @Override protected void onContentsChanged(int slot) { markDirty(); } };
         itemStackHandler.deserializeNBT(nbt.getCompoundTag("contents"));
     }
 
@@ -106,12 +108,12 @@ public class TileInventory extends TileEntity {
 
     @Override
     public final NBTTagCompound getUpdateTag() {
-        return this.writeToNBT(new NBTTagCompound());
+        return writeToNBT(new NBTTagCompound());
     }
 
     @Override
-    public final void handleUpdateTag(NBTTagCompound tag) {
-        this.readFromNBT(tag);
+    public final void handleUpdateTag(@Nonnull NBTTagCompound tag) {
+        readFromNBT(tag);
     }
 
 }
