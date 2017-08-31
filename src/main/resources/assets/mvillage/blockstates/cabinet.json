@@ -1,9 +1,13 @@
 {
   "forge_marker": 1,
-  "defaults": {
-    "model": "mvillage:cabinet_doors"
-  },
+  "defaults": {},
   "variants": {
+    "type": {
+      "doors": { "model": "mvillage:cabinet_doors" },
+      "drawers": { "model": "mvillage:cabinet_drawers" },
+      "crafting": { "model": "mvillage:cabinet_crafting" },
+      "sink": { "model": "mvillage:cabinet_sink" }
+    },
     "facing": {
       "north": {},
       "south": { "y": 180 },

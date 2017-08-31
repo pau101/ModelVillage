@@ -1,0 +1,13 @@
+{
+  "forge_marker": 1,
+  "defaults": {},
+  "variants": {
+    "inventory": { "transform": "forge:default-block" },
+    "type": {
+      "box": { "model": "mvillage:grave/grave_box_model" },
+      "cross": { "model": "mvillage:grave/grave_cross_model" },
+      "plate": { "model": "mvillage:grave/grave_plate_model" },
+      "tomb": { "model": "mvillage:grave/grave_tomb_model" }
+    }
+  }
+}

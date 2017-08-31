@@ -1,4 +1,29 @@
-tile.mvillage.test_inventory.name=Test Inventory
+itemGroup.mvillage=Model Village
+
 tile.mvillage.cabinet.name=Kitchen Cabinet
+tile.mvillage.cabinet.doors.name=Kitchen Cabinet
+tile.mvillage.cabinet.doors.tooltip=Doors
+
+tile.mvillage.cabinet.drawers.name=Kitchen Cabinet
+tile.mvillage.cabinet.drawers.tooltip=Drawers
+
+tile.mvillage.cabinet.crafting.name=Kitchen Cabinet
+tile.mvillage.cabinet.crafting.tooltip=Crafting
+
+tile.mvillage.cabinet.sink.name=Kitchen Cabinet
+tile.mvillage.cabinet.sink.tooltip=Sink
+
 tile.mvillage.oven.name=Oven
 tile.mvillage.connection_test.name=Connection Test
+
+tile.mvillage.grave.box.name=Grave
+tile.mvillage.grave.box.tooltip=Box
+
+tile.mvillage.grave.cross.name=Grave
+tile.mvillage.grave.cross.tooltip=Cross
+
+tile.mvillage.grave.plate.name=Grave
+tile.mvillage.grave.plate.tooltip=Plate
+
+tile.mvillage.grave.tomb.name=Grave
+tile.mvillage.grave.tomb.tooltip=Tomb

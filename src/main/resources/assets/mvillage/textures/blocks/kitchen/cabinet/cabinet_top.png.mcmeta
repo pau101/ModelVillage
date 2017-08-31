@@ -2,8 +2,8 @@
     "ctm": {
         "ctm_version": 1,
 		"type": "CTM",
-        "layer":"SOLID",
+        "layer":"CUTOUT",
 		"textures": [ "mvillage:blocks/kitchen/cabinet/cabinet_top_ctm" ],
-		"extra": { "ignoreStates": true }
+		"extra": { "ignore_states": true }
     }
 }
