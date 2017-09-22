@@ -22,7 +22,6 @@ import net.minecraft.util.ResourceLocation;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public final class WrappedModel {
 
@@ -36,8 +35,7 @@ public final class WrappedModel {
         this.item = model.item;
         this.meta = model.meta;
         this.resource = model.resource;
-        this.variants = model.variants.stream()
-                .collect(Collectors.joining(","));
+        this.variants = String.join(",", model.variants);
         this.mrl = new ModelResourceLocation(this.resource, this.variants);
     }
 
@@ -57,11 +55,11 @@ public final class WrappedModel {
         return variants;
     }
 
-    public ModelResourceLocation getModelResourceLocation() {
+    public ModelResourceLocation getMRL() {
         return mrl;
     }
 
-    public static class ModelBuilder {
+    public static final class ModelBuilder {
 
         private Item item;
         private int meta;

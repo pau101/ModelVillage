@@ -1,0 +1,25 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "mvillage:furniture/chair_normal"
+  },
+  "variants": {
+    "facing": {
+      "north": { },
+      "south": { "y": 180 },
+      "east": { "y": 90 },
+      "west": { "y": 270 }
+    },
+    "has_table": {
+      "true": { "model": "mvillage:furniture/chair_connected" },
+      "false": { }
+    },
+    "type": {
+      "wooden": { },
+      "modern": { },
+      "antique": { },
+      "futuristic": { }
+    },
+    "inventory": [ { } ]
+  }
+}

@@ -16,14 +16,31 @@ tile.mvillage.cabinet.sink.tooltip=Sink
 tile.mvillage.oven.name=Oven
 tile.mvillage.connection_test.name=Connection Test
 
-tile.mvillage.grave.box.name=Grave
-tile.mvillage.grave.box.tooltip=Box
+tile.mvillage.chair.wooden.name=Chair
+tile.mvillage.chair.wooden.tooltip=Wooden
 
-tile.mvillage.grave.cross.name=Grave
-tile.mvillage.grave.cross.tooltip=Cross
+tile.mvillage.chair.modern.name=Chair
+tile.mvillage.chair.modern.tooltip=Modern
 
-tile.mvillage.grave.plate.name=Grave
-tile.mvillage.grave.plate.tooltip=Plate
+tile.mvillage.chair.antique.name=Chair
+tile.mvillage.chair.antique.tooltip=Antique
 
-tile.mvillage.grave.tomb.name=Grave
-tile.mvillage.grave.tomb.tooltip=Tomb
+tile.mvillage.chair.fantasy.name=Chair
+tile.mvillage.chair.fantasy.tooltip=Fantasy
+
+tile.mvillage.table.wooden.name=Table
+tile.mvillage.table.wooden.tooltip=Wooden
+
+tile.mvillage.table.modern.name=Table
+tile.mvillage.table.modern.tooltip=Modern
+
+tile.mvillage.table.antique.name=Table
+tile.mvillage.table.antique.tooltip=Antique
+
+tile.mvillage.table.fantasy.name=Table
+tile.mvillage.table.fantasy.tooltip=Fantasy
+
+tile.mvillage.ceilingFan.name=Ceiling Fan
+
+tile.mvillage.doorBell.name=Door Bell
+subtitle.mvillage.doorBell=Door bell ringing

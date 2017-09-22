@@ -17,8 +17,14 @@ package net.insomniakitten.mvillage.common;
  */
 
 import net.insomniakitten.mvillage.ModelVillage;
-import net.insomniakitten.mvillage.module.kitchen.block.BlockCabinet;
 import net.insomniakitten.mvillage.common.inventory.TileInventory;
+import net.insomniakitten.mvillage.module.furniture.block.BlockChair;
+import net.insomniakitten.mvillage.module.furniture.block.BlockTable;
+import net.insomniakitten.mvillage.module.kitchen.block.BlockCabinet;
+import net.insomniakitten.mvillage.module.kitchen.block.BlockOven;
+import net.insomniakitten.mvillage.module.lighting.block.BlockCeilingFan;
+import net.insomniakitten.mvillage.module.lighting.tile.TileCeilingFan;
+import net.insomniakitten.mvillage.module.technical.block.BlockDoorBell;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -35,6 +41,13 @@ public class RegistryManager {
 
     private static final Set<ItemBlock> ITEM_BLOCKS = new HashSet<>();
 
+    public static final Block CABINET = new BlockCabinet();
+    public static final Block CHAIR = new BlockChair();
+    public static final Block TABLE = new BlockTable();
+    public static final Block OVEN = new BlockOven();
+    public static final Block FAN = new BlockCeilingFan();
+    public static final Block BELL = new BlockDoorBell();
+
     public static void registerItemBlock(ItemBlock iblock) {
         ITEM_BLOCKS.add(iblock);
     }
@@ -42,12 +55,13 @@ public class RegistryManager {
     @SubscribeEvent
     public static void onBlockRegistry(RegistryEvent.Register<Block> event) {
         GameRegistry.registerTileEntity(TileInventory.class, TileInventory.getKey());
-        event.getRegistry().register(new BlockCabinet());
+        GameRegistry.registerTileEntity(TileCeilingFan.class, TileCeilingFan.getKey());
+        event.getRegistry().registerAll(CABINET, CHAIR, TABLE, OVEN, FAN, BELL);
     }
 
     @SubscribeEvent
     public static void onItemRegistry(RegistryEvent.Register<Item> event) {
-        event.getRegistry().registerAll(ITEM_BLOCKS.toArray(new ItemBlock[0]));
+        event.getRegistry().registerAll(ITEM_BLOCKS.toArray(new ItemBlock[ 0 ]));
     }
 
 }

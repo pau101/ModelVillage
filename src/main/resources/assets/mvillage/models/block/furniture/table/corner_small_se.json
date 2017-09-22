@@ -1,0 +1,9 @@
+{
+  "__comment": "Copyright © InsomniaKitten 2017",
+  "parent": "mvillage:block/furniture/table/corner_small",
+  "textures": {
+    "down": "mvillage:blocks/furniture/table/corner_small_ne",
+    "up": "mvillage:blocks/furniture/table/corner_small_se",
+    "side": "mvillage:blocks/furniture/table/side"
+  }
+}

@@ -3,7 +3,7 @@
   "slots": {
     "columns": 9,
     "rows": 2,
-    "from": [8, 27]
+    "from": [ 8, 27 ]
   },
   "texture": {
     "path": "mvillage:textures/gui/medium.png",

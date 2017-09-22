@@ -19,6 +19,7 @@ package net.insomniakitten.mvillage.common.inventory;
 public interface IContainerType {
 
     int getTotalSlots();
+
     int getID();
 
 }

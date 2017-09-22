@@ -18,56 +18,22 @@ package net.insomniakitten.mvillage.common.item;
 
 import net.insomniakitten.mvillage.client.model.ModelRegistry;
 import net.insomniakitten.mvillage.client.model.WrappedModel;
-import net.insomniakitten.mvillage.common.block.BlockBase;
-import net.insomniakitten.mvillage.common.util.IStatePropertyHolder;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.List;
+public class ItemBlockBase extends ItemBlock {
 
-public class ItemBlockBase<E extends Enum<E> & IStatePropertyHolder<E>> extends ItemBlock {
-
-    private final E[] values;
-
-    public ItemBlockBase(BlockBase<E> block) {
+    public ItemBlockBase(Block block) {
         super(block);
-        this.values = block.getValues();
-        assert block.getRegistryName() != null;
+        //noinspection ConstantConditions
         setRegistryName(block.getRegistryName());
-        setHasSubtypes(true);
+        setUnlocalizedName(block.getUnlocalizedName());
+        setCreativeTab(block.getCreativeTabToDisplayOn());
         registerModels();
     }
 
-    private void registerModels() {
-        for (E value : values) {
-            WrappedModel model = new WrappedModel.ModelBuilder(this, value.getMetadata())
-                    .addVariant("type=" + value.getName()).build();
-            ModelRegistry.registerModel(model);
-        }
-    }
-
-    @Override
-    public String getUnlocalizedName(ItemStack stack) {
-        int meta = stack.getMetadata() % values.length;
-        return this.block.getUnlocalizedName() + "." + values[meta].getName();
-    }
-
-    @Override @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-        String key = stack.getUnlocalizedName() + ".tooltip";
-        if (I18n.hasKey(key)) {
-            tooltip.add(I18n.format(key));
-        }
-    }
-
-    @Override
-    public int getMetadata(int damage) {
-        return damage;
+    protected void registerModels() {
+        ModelRegistry.registerModel(new WrappedModel.ModelBuilder(this).addVariant("normal").build());
     }
 
 }

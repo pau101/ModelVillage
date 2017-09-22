@@ -42,7 +42,7 @@ public enum InventoryType implements IContainerType {
     }
 
     public static InventoryType getType(int id) {
-        return values()[id % values().length];
+        return values()[ id % values().length ];
     }
 
     public int getRows() {

@@ -16,25 +16,44 @@ package net.insomniakitten.mvillage.module.kitchen.block;
  *   limitations under the License.
  */
 
-import net.insomniakitten.mvillage.common.block.BlockCardinalBase;
+import net.insomniakitten.mvillage.client.state.StateRegistry;
+import net.insomniakitten.mvillage.common.RegistryManager;
+import net.insomniakitten.mvillage.common.block.BlockEnumCardinalBase;
 import net.insomniakitten.mvillage.common.inventory.IContainer;
 import net.insomniakitten.mvillage.common.inventory.InventoryType;
+import net.insomniakitten.mvillage.common.item.ItemBlockEnumBase;
 import net.insomniakitten.mvillage.common.util.IStatePropertyHolder;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 
-@SuppressWarnings("deprecation")
-public class BlockCabinet extends BlockCardinalBase<BlockCabinet.CabinetType> implements IContainer {
+import java.util.Locale;
+
+public class BlockCabinet extends BlockEnumCardinalBase<BlockCabinet.CabinetType> implements IContainer {
+
+    private static final PropertyEnum<CabinetAttach> ATTACH = PropertyEnum.create("attach", CabinetAttach.class);
 
     public BlockCabinet() {
         super("cabinet", CabinetType.class);
+        setLightOpacity(0);
+        StateRegistry.registerVariantRedirect(this, propertyEnum);
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state) {
-        return false;
+    public void registerItemBlock() {
+        RegistryManager.registerItemBlock(new ItemBlockEnumBase<>(this, true));
+    }
+
+    @Override
+    public boolean hasTileEntity(IBlockState state) {
+        return getType(state).hasTileEntity();
     }
 
     @Override
@@ -42,9 +61,52 @@ public class BlockCabinet extends BlockCardinalBase<BlockCabinet.CabinetType> im
         return InventoryType.LARGE;
     }
 
+    @Override
+    @Deprecated
+    public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
+        return state.withProperty(ATTACH, CabinetAttach.getValidState(world, pos));
+    }
+
+    @Override
+    @Deprecated
+    public boolean isOpaqueCube(IBlockState state) {
+        return false;
+    }
+
+    @Override
+    protected BlockStateContainer.Builder createStateContainer() {
+        return super.createStateContainer().add(ATTACH);
+    }
+
+    private enum CabinetAttach implements IStringSerializable {
+
+        DOWN,
+        UP;
+
+        public static CabinetAttach getValidState(IBlockAccess world, BlockPos pos) {
+            IBlockState stateAt = world.getBlockState(pos.down());
+            boolean isTopSolid = stateAt.isSideSolid(world, pos, EnumFacing.UP);
+            boolean isCabinet = stateAt.getBlock() instanceof BlockCabinet;
+            return isTopSolid && !isCabinet ? DOWN : UP;
+        }
+
+        private int getLightOpacity() {
+            return equals(DOWN) ? 255 : 0;
+        }
+
+        @Override
+        public String getName() {
+            return name().toLowerCase(Locale.ROOT);
+        }
+
+    }
+
     public enum CabinetType implements IStatePropertyHolder<CabinetType> {
 
-        DOORS, DRAWERS, CRAFTING, SINK;
+        DOORS,
+        DRAWERS,
+        CRAFTING,
+        SINK;
 
         @Override
         public CabinetType getEnum() {
@@ -78,12 +140,26 @@ public class BlockCabinet extends BlockCardinalBase<BlockCabinet.CabinetType> im
 
         @Override
         public String getOrePrefix() {
-            return "cabinet";
+            return "blockCabinet";
         }
 
         @Override
         public String getEffectiveTool() {
             return "pickaxe";
+        }
+
+        @Override
+        public boolean isFullCube() {
+            return false;
+        }
+
+        @Override
+        public boolean isSideSolid(IBlockAccess world, BlockPos pos, EnumFacing side) {
+            return EnumFacing.UP.equals(side);
+        }
+
+        public boolean hasTileEntity() {
+            return equals(DOORS) || equals(DRAWERS);
         }
 
     }

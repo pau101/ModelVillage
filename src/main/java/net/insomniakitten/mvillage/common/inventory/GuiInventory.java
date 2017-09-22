@@ -33,17 +33,17 @@ public class GuiInventory extends GuiContainer {
     }
 
     @Override
+    public void initGui() {
+        super.initGui();
+        xSize = inventoryType.getTextureWidth();
+        ySize = inventoryType.getTextureHeight();
+    }
+
+    @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         drawDefaultBackground();
         super.drawScreen(mouseX, mouseY, partialTicks);
         renderHoveredToolTip(mouseX, mouseY);
-    }
-
-    @Override
-    public void initGui() {
-        xSize = inventoryType.getTextureWidth();
-        ySize = inventoryType.getTextureHeight();
-        super.initGui();
     }
 
     @Override

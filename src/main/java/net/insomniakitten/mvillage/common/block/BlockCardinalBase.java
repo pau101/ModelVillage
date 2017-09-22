@@ -16,7 +16,10 @@ package net.insomniakitten.mvillage.common.block;
  *   limitations under the License.
  */
 
-import net.insomniakitten.mvillage.common.util.IStatePropertyHolder;
+import net.insomniakitten.mvillage.common.RegistryManager;
+import net.insomniakitten.mvillage.common.item.ItemBlockCardinalBase;
+import net.minecraft.block.SoundType;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -26,12 +29,21 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockCardinalBase<E extends Enum<E> & IStatePropertyHolder<E>> extends BlockBase<E> {
+public class BlockCardinalBase extends BlockBase {
 
     private static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
 
-    public BlockCardinalBase(String name, Class<E> clazz) {
-        super(name, clazz);
+    public BlockCardinalBase(String name, float hardness, float resistance, Material material, SoundType sound) {
+        super(name, hardness, resistance, material, sound);
+    }
+
+    @Override
+    public void registerItemBlock() {
+        RegistryManager.registerItemBlock(new ItemBlockCardinalBase(this));
+    }
+
+    public static PropertyDirection getFacingProperty() {
+        return FACING;
     }
 
     public EnumFacing getFacing(IBlockState state) {
@@ -39,29 +51,28 @@ public class BlockCardinalBase<E extends Enum<E> & IStatePropertyHolder<E>> exte
     }
 
     @Override
-    public IBlockState getStateForPlacement(
-            World world, BlockPos pos, EnumFacing side,
-            float hitX, float hitY, float hitZ,
-            int meta, EntityLivingBase placer, EnumHand hand) {
-        EnumFacing facing = placer.getHorizontalFacing().getOpposite();
-        return super.getStateFromMeta(meta).withProperty(FACING, facing);
+    @Deprecated
+    public IBlockState getStateFromMeta(int meta) {
+        EnumFacing facing = EnumFacing.getHorizontal(meta);
+        return getDefaultState().withProperty(FACING, facing);
     }
 
     @Override
     public int getMetaFromState(IBlockState state) {
-        int facing = getFacing(state).getHorizontalIndex() << 2;
-        return facing | super.getMetaFromState(state);
+        return getFacing(state).getHorizontalIndex();
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta) {
-        EnumFacing facing = EnumFacing.getHorizontal(meta >> 2);
-        return super.getStateFromMeta(meta).withProperty(FACING, facing);
+    public IBlockState getStateForPlacement(
+            World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, int meta,
+            EntityLivingBase placer, EnumHand hand) {
+        EnumFacing facing = placer.getHorizontalFacing().getOpposite();
+        return getDefaultState().withProperty(FACING, facing);
     }
 
     @Override
-    protected BlockStateContainer createStateContainer() {
-        return new BlockStateContainer.Builder(this).add(FACING).add(property).build();
+    protected BlockStateContainer.Builder createStateContainer() {
+        return super.createStateContainer().add(FACING);
     }
 
 }

@@ -1,0 +1,8 @@
+{
+  "door_bell":
+  {
+    "category": "blocks",
+    "subtitle": "subtitle.mvillage.doorBell",
+    "sounds": [ "mvillage:door_bell" ]
+  }
+}

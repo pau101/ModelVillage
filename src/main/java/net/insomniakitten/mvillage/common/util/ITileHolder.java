@@ -27,7 +27,7 @@ import javax.annotation.Nullable;
 public interface ITileHolder {
 
     @Nullable
-    default TileEntity getTileEntity() {
+    default TileEntity getTileEntity(IBlockState state) {
         return null;
     }
 
@@ -35,7 +35,7 @@ public interface ITileHolder {
      * Called in the base block class when the tile's block is right clicked by a player
      * All parameters are provided by Block#onBlockActivated
      */
-    default boolean onTileInteract(World world, BlockPos pos, EntityPlayer player) {
+    default boolean onTileInteract(IBlockState state, World world, BlockPos pos, EntityPlayer player) {
         return false;
     }
 
@@ -43,7 +43,7 @@ public interface ITileHolder {
      * Called in the base block class when the tile's block is broken
      * All parameters are provided by Block#breakBlock
      */
-    default void onTileRemove(World world, BlockPos pos, IBlockState state) {
+    default void onTileRemove(IBlockState state, World world, BlockPos pos) {
         // no-op
     }
 

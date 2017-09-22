@@ -17,14 +17,19 @@ package net.insomniakitten.mvillage.common.util;
  */
 
 import com.google.common.base.CaseFormat;
+import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 
 import java.util.Locale;
 
-public interface IStatePropertyHolder<E extends Enum<E> & IStringSerializable> extends IStringSerializable {
+public interface IStatePropertyHolder <E extends Enum<E> & IStringSerializable> extends IStringSerializable {
 
     E getEnum();
 
@@ -48,6 +53,10 @@ public interface IStatePropertyHolder<E extends Enum<E> & IStringSerializable> e
         return null;
     }
 
+    default AxisAlignedBB getBoundingBox() {
+        return Block.FULL_BLOCK_AABB;
+    }
+
     default String getName() {
         return this.getEnum().name().toLowerCase(Locale.ROOT);
     }
@@ -65,6 +74,10 @@ public interface IStatePropertyHolder<E extends Enum<E> & IStringSerializable> e
     }
 
     default boolean isFullCube() {
+        return true;
+    }
+
+    default boolean isSideSolid(IBlockAccess world, BlockPos pos, EnumFacing side) {
         return true;
     }
 

@@ -66,13 +66,6 @@ public class ContainerInventory extends Container {
     }
 
     @Override
-    public void onContainerClosed(EntityPlayer player) {
-        IContainer block = ((IContainer) tileInventory.getBlockType());
-        block.playSound(true, player.world, tileInventory.getPos());
-        super.onContainerClosed(player);
-    }
-
-    @Override
     @Nonnull
     public ItemStack transferStackInSlot(EntityPlayer player, int index) {
         Slot slot = inventorySlots.get(index);
@@ -90,6 +83,13 @@ public class ContainerInventory extends Container {
             return stack;
         }
         return ItemStack.EMPTY;
+    }
+
+    @Override
+    public void onContainerClosed(EntityPlayer player) {
+        IContainer block = ((IContainer) tileInventory.getBlockType());
+        block.playSound(true, player.world, tileInventory.getPos());
+        super.onContainerClosed(player);
     }
 
     @Override

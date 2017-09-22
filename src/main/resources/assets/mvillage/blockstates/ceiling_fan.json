@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "inventory": { "model": "mvillage:lighting/ceiling_fan" },
+    "normal": { "model": "mvillage:lighting/ceiling_fan" }
+  }
+}

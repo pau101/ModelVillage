@@ -1,15 +1,15 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "mvillage:oven"
+    "model": "mvillage:kitchen/oven"
   },
   "variants": {
     "facing": {
-      "north": {},
+      "north": { },
       "south": { "y": 180 },
       "east": { "y": 90 },
       "west": { "y": 270 }
     },
-    "inventory": [{}]
+    "inventory": [ { } ]
   }
 }

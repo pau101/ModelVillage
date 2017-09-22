@@ -1,0 +1,98 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "shape": "normal"
+      },
+      "apply": {
+        "model": "mvillage:furniture/table/surface"
+      }
+    },
+    {
+      "when": {
+        "shape": "corner",
+        "connect_north": "false", "connect_west": "false",
+        "connect_south": "true", "connect_east": "true"
+      },
+      "apply": {
+        "model": "mvillage:furniture/table/corner_large_nw"
+      }
+    },
+    {
+      "when": {
+        "shape": "corner",
+        "connect_north": "false", "connect_west": "true",
+        "connect_south": "true", "connect_east": "false"
+      },
+      "apply": {
+        "model": "mvillage:furniture/table/corner_large_ne",
+        "y": 90, "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "shape": "corner",
+        "connect_north": "true", "connect_west": "false",
+        "connect_south": "false", "connect_east": "true"
+      },
+      "apply": {
+        "model": "mvillage:furniture/table/corner_large_sw",
+        "y": 270, "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "shape": "corner",
+        "connect_north": "true", "connect_west": "true",
+        "connect_south": "false", "connect_east": "false"
+      },
+      "apply": {
+        "model": "mvillage:furniture/table/corner_large_se",
+        "y": 180, "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "shape": "normal",
+        "connect_north": "false",
+        "connect_west": "false"
+      },
+      "apply": {
+        "model": "mvillage:furniture/table/leg"
+      }
+    },
+    {
+      "when": {
+        "shape": "normal",
+        "connect_north": "false",
+        "connect_east": "false"
+      },
+      "apply": {
+        "model": "mvillage:furniture/table/leg",
+        "y": 90, "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "shape": "normal",
+        "connect_south": "false",
+        "connect_west": "false"
+      },
+      "apply": {
+        "model": "mvillage:furniture/table/leg",
+        "y": 270, "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "shape": "normal",
+        "connect_south": "false",
+        "connect_east": "false"
+      },
+      "apply": {
+        "model": "mvillage:furniture/table/leg",
+        "y": 180, "uvlock": true
+      }
+    }
+  ]
+}

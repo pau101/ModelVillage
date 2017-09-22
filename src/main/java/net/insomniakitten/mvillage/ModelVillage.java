@@ -21,13 +21,12 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
 
-@Mod(   modid = ModelVillage.MOD_ID,
-        name = ModelVillage.MOD_NAME,
-        version = ModelVillage.MOD_VERSION,
-        acceptedMinecraftVersions = ModelVillage.MC_VERSION,
-        dependencies = ModelVillage.DEPENDENCIES)
+@Mod(modid = ModelVillage.MOD_ID,
+     name = ModelVillage.MOD_NAME,
+     version = ModelVillage.MOD_VERSION,
+     dependencies = ModelVillage.DEPENDENCIES,
+     acceptedMinecraftVersions = ModelVillage.MC_VERSION)
 
 public class ModelVillage {
 
@@ -37,19 +36,21 @@ public class ModelVillage {
     public static final String MOD_ID = "mvillage";
     public static final String MOD_NAME = "Model Village";
     public static final String MOD_VERSION = "%MODVERSION%";
-    public static final String MC_VERSION = "[1.12,1.13)";
     public static final String DEPENDENCIES = "required-after:ctm@[%CTMVERSION%,);";
+    public static final String MC_VERSION = "[1.12,1.13)";
 
     public static final CreativeTabs CTAB = new CreativeTabs(ModelVillage.MOD_ID) {
+
         @Override
         public ItemStack getTabIconItem() {
             return ItemStack.EMPTY;
         }
+
     };
 
     @Mod.EventHandler
     public void onPostInit(FMLPostInitializationEvent event) {
-        NetworkRegistry.INSTANCE.registerGuiHandler(ModelVillage.MOD_ID, new GuiManager());
+        GuiManager.register();
     }
 
 }

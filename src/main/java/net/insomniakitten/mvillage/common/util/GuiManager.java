@@ -16,20 +16,30 @@ package net.insomniakitten.mvillage.common.util;
  *   limitations under the License.
  */
 
+import net.insomniakitten.mvillage.ModelVillage;
 import net.insomniakitten.mvillage.common.inventory.ContainerInventory;
 import net.insomniakitten.mvillage.common.inventory.GuiInventory;
 import net.insomniakitten.mvillage.common.inventory.TileInventory;
+import net.insomniakitten.mvillage.module.technical.gui.ContainerDoorBell;
+import net.insomniakitten.mvillage.module.technical.gui.GuiDoorBell;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
 public class GuiManager implements IGuiHandler {
+
+    public static final GuiManager INSTANCE = new GuiManager();
+
+    public static void register() {
+        NetworkRegistry.INSTANCE.registerGuiHandler(ModelVillage.MOD_ID, INSTANCE);
+    }
 
     @Override
     @Nullable
@@ -38,6 +48,8 @@ public class GuiManager implements IGuiHandler {
         switch (GuiType.get(ID)) {
             case INVENTORY:
                 return new ContainerInventory((TileInventory) tile, player);
+            case DOOR_BELL:
+                return new ContainerDoorBell(player);
         }
         return null;
     }
@@ -50,19 +62,21 @@ public class GuiManager implements IGuiHandler {
         switch (GuiType.get(ID)) {
             case INVENTORY:
                 return new GuiInventory((TileInventory) tile, player);
+            case DOOR_BELL:
+                return new GuiDoorBell(player);
         }
         return null;
     }
 
     public enum GuiType {
 
-        INVENTORY;
+        INVENTORY, DOOR_BELL;
 
         public static GuiType get(int id) {
-            return values()[id % values().length];
+            return values()[ id % values().length ];
         }
 
-        public int getID() {
+        public int getId() {
             return ordinal();
         }
 

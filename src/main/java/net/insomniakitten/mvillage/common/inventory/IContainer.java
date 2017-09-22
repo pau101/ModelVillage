@@ -37,6 +37,7 @@ public interface IContainer extends ITileHolder {
 
     /**
      * This is what tells the tile entity which inventory type you want attached to your block.
+     *
      * @see InventoryType for more information on the available types.
      */
     InventoryType getInventoryType();
@@ -46,21 +47,23 @@ public interface IContainer extends ITileHolder {
     }
 
     @Override
-    default TileEntity getTileEntity() {
+    default TileEntity getTileEntity(IBlockState state) {
         return new TileInventory(getInventoryType());
     }
 
     @Override
-    default boolean onTileInteract(World world, BlockPos pos, EntityPlayer player) {
-        playSound(false, world, pos);
-        FMLNetworkHandler.openGui(
-                player, ModelVillage.instance, GuiType.INVENTORY.getID(),
-                world, pos.getX(), pos.getY(), pos.getZ());
-        return true;
+    default boolean onTileInteract(IBlockState state, World world, BlockPos pos, EntityPlayer player) {
+        if (state.getBlock().hasTileEntity(state)) {
+            playSound(false, world, pos);
+            int id = GuiType.INVENTORY.getId();
+            FMLNetworkHandler.openGui(player, ModelVillage.instance, id, world, pos.getX(), pos.getY(), pos.getZ());
+            return true;
+        }
+        return false;
     }
 
     @Override
-    default void onTileRemove(World world, BlockPos pos, IBlockState state) {
+    default void onTileRemove(IBlockState state, World world, BlockPos pos) {
         Capability<IItemHandler> items = TileInventory.getCapabilityType();
         TileEntity tile = world.getTileEntity(pos);
         if (tile != null && tile instanceof TileInventory) {
@@ -76,7 +79,9 @@ public interface IContainer extends ITileHolder {
 
     default void playSound(boolean isClosing, World world, BlockPos pos) {
         if (!hasInteractionSound()) return;
-        SoundEvent sound = isClosing ? SoundEvents.BLOCK_CHEST_CLOSE : SoundEvents.BLOCK_CHEST_OPEN;
+        SoundEvent sound = isClosing
+                           ? SoundEvents.BLOCK_CHEST_CLOSE
+                           : SoundEvents.BLOCK_CHEST_OPEN;
         world.playSound(null, pos, sound, SoundCategory.BLOCKS, 1.0f, 1.0f);
     }
 

@@ -69,10 +69,54 @@ public class TileInventory extends TileEntity {
     }
 
     @Override
+    public final void readFromNBT(NBTTagCompound nbt) {
+        super.readFromNBT(nbt);
+        inventoryType = InventoryType.getType(nbt.getInteger("inventoryType"));
+        inventoryHandler = new InventoryHandler<>(this, inventoryType);
+        inventoryHandler.deserializeNBT(nbt.getCompoundTag("contents"));
+    }
+
+    @Override
+    @Nonnull
+    public final NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+        super.writeToNBT(nbt);
+        nbt.setInteger("inventoryType", inventoryType.getID());
+        nbt.setTag("contents", inventoryHandler.serializeNBT());
+        return nbt;
+    }
+
+    @Override
+    public final SPacketUpdateTileEntity getUpdatePacket() {
+        return new SPacketUpdateTileEntity(getPos(), 0, getUpdateTag());
+    }
+
+    @Override
+    public final NBTTagCompound getUpdateTag() {
+        return writeToNBT(new NBTTagCompound());
+    }
+
+    @Override
     @Nonnull
     public ITextComponent getDisplayName() {
         String name = getBlockType().getUnlocalizedName() + ".name";
         return new TextComponentTranslation(name);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public final void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+        super.onDataPacket(net, pkt);
+        readFromNBT(pkt.getNbtCompound());
+    }
+
+    @Override
+    public final void handleUpdateTag(@Nonnull NBTTagCompound tag) {
+        readFromNBT(tag);
+    }
+
+    @Override
+    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {
+        return oldState.getBlock() != newState.getBlock();
     }
 
     @Override
@@ -82,49 +126,9 @@ public class TileInventory extends TileEntity {
 
     @Override
     public <T> T getCapability(@Nonnull Capability<T> cap, @Nullable EnumFacing facing) {
-        return cap.equals(CAPABILITY) ? CAPABILITY.cast(inventoryHandler) : super.getCapability(cap, facing);
-    }
-
-    @Override
-    public final void readFromNBT(NBTTagCompound nbt) {
-        super.readFromNBT(nbt);
-        inventoryType = InventoryType.getType(nbt.getInteger("inventoryType"));
-        inventoryHandler = new InventoryHandler<>(this, inventoryType);
-        inventoryHandler.deserializeNBT(nbt.getCompoundTag("contents"));
-    }
-
-    @Override @Nonnull
-    public final NBTTagCompound writeToNBT(NBTTagCompound nbt) {
-        super.writeToNBT(nbt);
-        nbt.setInteger("inventoryType", inventoryType.getID());
-        nbt.setTag("contents", inventoryHandler.serializeNBT());
-        return nbt;
-    }
-
-    @Override 
-    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {
-        return oldState.getBlock() != newState.getBlock();
-    }
-
-    @Override
-    public final SPacketUpdateTileEntity getUpdatePacket() {
-        return new SPacketUpdateTileEntity(getPos(), 0, getUpdateTag());
-    }
-
-    @Override @SideOnly(Side.CLIENT)
-    public final void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-        super.onDataPacket(net, pkt);
-        readFromNBT(pkt.getNbtCompound());
-    }
-
-    @Override
-    public final NBTTagCompound getUpdateTag() {
-        return writeToNBT(new NBTTagCompound());
-    }
-
-    @Override
-    public final void handleUpdateTag(@Nonnull NBTTagCompound tag) {
-        readFromNBT(tag);
+        return cap.equals(CAPABILITY)
+               ? CAPABILITY.cast(inventoryHandler)
+               : super.getCapability(cap, facing);
     }
 
 }

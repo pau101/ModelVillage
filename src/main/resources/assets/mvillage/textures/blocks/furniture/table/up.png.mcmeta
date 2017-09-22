@@ -1,0 +1,16 @@
+{
+  "ctm": {
+    "ctm_version": 1,
+    "type": "CTM",
+    "layer": "CUTOUT",
+    "textures": [ "mvillage:blocks/furniture/table/up_ctm" ],
+    "extra": {
+      "connect_to": [
+        {
+          "block": "mvillage:table",
+          "predicate": { "type": "wooden" }
+        }
+      ]
+    }
+  }
+}

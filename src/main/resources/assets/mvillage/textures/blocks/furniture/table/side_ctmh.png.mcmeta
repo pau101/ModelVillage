@@ -1,0 +1,15 @@
+{
+  "ctm": {
+    "ctm_version": 1,
+    "type": "CTMH",
+    "layer": "CUTOUT",
+    "extra": {
+      "connect_to": [
+        {
+          "block": "mvillage:table",
+          "predicate": { "type": "wooden" }
+        }
+      ]
+    }
+  }
+}

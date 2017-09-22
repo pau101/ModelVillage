@@ -25,18 +25,13 @@ import net.minecraftforge.items.ItemStackHandler;
 import static net.minecraftforge.common.util.Constants.NBT.TAG_COMPOUND;
 import static net.minecraftforge.common.util.Constants.NBT.TAG_INT;
 
-public class InventoryHandler<K extends IContainerType> extends ItemStackHandler {
+public class InventoryHandler <K extends IContainerType> extends ItemStackHandler {
 
     private TileEntity tile;
 
     public InventoryHandler(TileEntity tile, K type) {
         setSize(type.getTotalSlots());
         this.tile = tile;
-    }
-
-    @Override
-    protected void onContentsChanged(int slot) {
-        tile.markDirty();
     }
 
     @Override
@@ -58,8 +53,9 @@ public class InventoryHandler<K extends IContainerType> extends ItemStackHandler
 
     @Override
     public void deserializeNBT(NBTTagCompound nbt) {
-        setSize(nbt.hasKey("size", TAG_INT) ?
-                nbt.getInteger("size") : stacks.size());
+        setSize(nbt.hasKey("size", TAG_INT)
+                ? nbt.getInteger("size")
+                : stacks.size());
         NBTTagList items = nbt.getTagList("items", TAG_COMPOUND);
         for (int i = 0; i < items.tagCount(); i++) {
             NBTTagCompound item = items.getCompoundTagAt(i);
@@ -69,6 +65,11 @@ public class InventoryHandler<K extends IContainerType> extends ItemStackHandler
             }
         }
         onLoad();
+    }
+
+    @Override
+    protected void onContentsChanged(int slot) {
+        tile.markDirty();
     }
 
 }
