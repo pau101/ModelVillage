@@ -36,6 +36,24 @@ processResources {
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info', 'pack.mcmeta'
     }
+
+    doLast {
+        fileTree(dir: sourceSets.main.output.resourcesDir, include: '**/*.png').getFiles().forEach {
+            rewritePng(it)
+        }
+    }
+}
+
+def rewritePng(java.io.File file) {
+    java.awt.image.BufferedImage image = null
+    try {
+        image = javax.imageio.ImageIO.read(file)
+    } catch(IOException e) {
+        println "Skipping $file"
+    }
+    if(image != null) {
+        javax.imageio.ImageIO.write(image, 'png', file)
+    }
 }
 
 repositories {
